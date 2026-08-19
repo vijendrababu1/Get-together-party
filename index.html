@@ -30,7 +30,7 @@
             font-family: 'Outfit', sans-serif;
             background: #0b0f19;
             color: var(--text-color);
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,47 +38,26 @@
             position: relative;
         }
 
-        /* Background Video Container */
-        #bgVideoContainer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;    
-            height: 100vh;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        #bgVideoContainer video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.4);
-        }
-
-        /* Mobile Viewport Wrapper (Strict 9:16 / Vertical 16:9 Ratio Feel) */
+        /* Mobile Viewport Frame - Fixed 16:9 vertical ratio box */
         .mobile-frame {
             position: relative;
             z-index: 2;
             width: 100vw;
             height: 100vh;
-            max-width: 430px;
-            max-height: 880px;
+            max-width: 410px;
+            max-height: 820px;
             background: #2A445F;
-            border-radius: 0px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            overflow-x: hidden;
+            justify-content: center;
+            overflow: hidden;
             border: none;
         }
 
-        @media (min-width: 481px) {
+        @media (min-width: 411px) {
             .mobile-frame {
-                border-radius: 36px;
-                border: 10px solid #1e293b;
+                border-radius: 28px;
+                border: 8px solid #1e293b;
                 height: 85vh;
             }
         }
@@ -86,11 +65,11 @@
         /* Natural Warm Light Lamp Blinking Effect */
         .ambient-lamp {
             position: absolute;
-            top: -50px;
+            top: -40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
-            height: 150px;
+            width: 250px;
+            height: 120px;
             background: radial-gradient(ellipse at center, rgba(255, 204, 111, 0.25) 0%, rgba(255, 170, 51, 0.05) 50%, transparent 70%);
             z-index: 1;
             pointer-events: none;
@@ -109,12 +88,11 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            padding: 30px 20px;
+            padding: 12px 14px;
             text-align: center;
-            margin: auto 0;
             animation: containerEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
         }
 
         @keyframes containerEntrance {
@@ -130,11 +108,11 @@
         }
         .page.active {
             display: block;
-            animation: fadeInPage 0.6s ease forwards;
+            animation: fadeInPage 0.4s ease forwards;
         }
 
         @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -142,40 +120,39 @@
             display: inline-block;
             background: rgba(245, 158, 11, 0.15);
             color: #fbbf24;
-            padding: 5px 14px;
+            padding: 3px 10px;
             border-radius: 50px;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
             border: 1px solid rgba(245, 158, 11, 0.3);
-            animation: pulseGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
-            50% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
         }
 
         /* 1st Page Scratch Card Container */
         .scratch-preview-container {
-            margin: 0 auto 20px auto;
-            max-width: 280px;
-            border-radius: 16px;
+            margin: 0 auto 10px auto;
+            max-width: 240px;
+            border-radius: 12px;
             overflow: hidden;
             border: 2px solid rgba(245, 158, 11, 0.4);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             background: #111;
             position: relative;
-            height: 160px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .scratch-preview-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        .scratch-reveal-content {
+            color: #fbbf24;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
         }
 
         .scratch-preview-canvas {
@@ -190,89 +167,87 @@
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 4px;
             color: #ffffff;
-            letter-spacing: -0.5px;
         }
 
         p.subtitle {
-            font-size: 0.95rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            margin-bottom: 25px;
-            line-height: 1.5;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
         /* Detailed Schedule / Itinerary Section */
         .agenda-section {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
             text-align: left;
         }
 
         .agenda-section h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             color: #FFFFFF;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
             text-align: center;
         }
 
         .agenda-grid {
             display: grid;
-            gap: 10px;
+            gap: 4px;
         }
 
         .agenda-item {
             background: rgba(0, 0, 0, 0.25);
-            padding: 12px;
-            border-radius: 12px;
-            border-left: 3px solid var(--primary);
+            padding: 6px 8px;
+            border-radius: 6px;
+            border-left: 2px solid var(--primary);
         }
 
         .agenda-item span {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             color: var(--primary);
             text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 2px;
-            letter-spacing: 1px;
+            margin-bottom: 1px;
         }
 
         .agenda-item h4 {
-            font-size: 0.95rem;
+            font-size: 0.78rem;
             color: #fff;
-            margin-bottom: 2px;
         }
 
         .event-details {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .detail-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 15px;
-            border-radius: 16px;
+            padding: 8px 4px;
+            border-radius: 10px;
+            text-align: center;
         }
 
         .detail-card h3 {
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
         }
 
         .detail-card p {
-            font-size: 1rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: #fff;
         }
@@ -280,6 +255,7 @@
         .detail-card a {
             color: #fff;
             text-decoration: none;
+            font-size: 0.7rem;
         }
 
         .detail-card a:hover {
@@ -289,162 +265,78 @@
 
         /* Countdown Section */
         .countdown-container {
-            margin-bottom: 25px;
+            margin-bottom: 8px;
         }
 
         .countdown-title {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
         }
 
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .time-box {
             background: rgba(0, 0, 0, 0.5);
-            padding: 10px 12px;
-            border-radius: 12px;
-            min-width: 60px;
+            padding: 5px 4px;
+            border-radius: 8px;
+            min-width: 44px;
             border: 1px solid rgba(245, 158, 11, 0.2);
         }
 
         .time-box span {
             display: block;
-            font-size: 1.3rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #fbbf24;
         }
 
         .time-box label {
-            font-size: 0.65rem;
+            font-size: 0.52rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         /* Gate Pass Link Section */
         .gatepass-container {
-            display: none;
-            margin-bottom: 20px;
+            display: block !important;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 8px;
+            border-radius: 10px;
         }
 
         .gatepass-title {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 600;
         }
 
         .gatepass-btn {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 7px 16px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        /* Admin Section Styling */
-        .admin-section {
-            display: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 25px;
-            padding-top: 20px;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 16px;
-        }
-
-        .admin-section h2 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-        }
-
-        .admin-controls {
-            display: none;
-            margin-top: 12px;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .admin-controls label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .file-input-wrapper {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .remove-btn {
-            background: #ef4444 !important;
-            padding: 8px 12px !important;
-            font-size: 0.75rem !important;
-            width: auto !important;
-            margin: 0 !important;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        button.admin-submit {
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Background Video Container -->
-    <div id="bgVideoContainer">
-        <video id="bgVideoElement" autoplay muted loop playsinline>
-            <source id="videoSource" src="https://assets.mixkit.co/videos/preview/mixkit-party-crowd-of-people-dancing-in-a-club-41618-large.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <!-- Mobile Viewport Frame (Strict 16:9 / Vertical Mobile Ratio) -->
+    <!-- Mobile Viewport Frame -->
     <div class="mobile-frame">
         <!-- Natural Warm Light Lamp Blinking Effect -->
         <div class="ambient-lamp"></div>
@@ -459,10 +351,8 @@
                 <div class="tag">You're Invited</div>
 
                 <div class="scratch-preview-container" id="page1ScratchContainer">
-                    <video autoplay muted loop playsinline>
-                        <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41642-large.mp4" type="video/mp4">
-                    </video>
-                    <canvas id="page1ScratchCanvas" class="scratch-preview-canvas" width="278" height="158"></canvas>
+                    <div class="scratch-reveal-content">✨ Get Ready! ✨</div>
+                    <canvas id="page1ScratchCanvas" class="scratch-preview-canvas" width="238" height="128"></canvas>
                 </div>
             </div>
 
@@ -481,21 +371,21 @@
                 <div class="event-details">
                     <div class="detail-card">
                         <h3>Date</h3>
-                        <p>September 5, 2026</p>
+                        <p>Sep 5, 2026</p>
                     </div>
                     <div class="detail-card">
                         <h3>Time</h3>
-                        <p>6:00 PM Onwards</p>
+                        <p>6:00 PM</p>
                     </div>
                     <div class="detail-card">
                         <h3>Location</h3>
-                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">View Location Map</a></p>
+                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">Map ↗</a></p>
                     </div>
                 </div>
 
                 <!-- Countdown Timer -->
                 <div class="countdown-container">
-                    <div class="countdown-title">Countdown to the Event</div>
+                    <div class="countdown-title">Countdown to Event</div>
                     <div class="countdown" id="countdown">
                         <div class="time-box"><span id="days">00</span><label>Days</label></div>
                         <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
@@ -505,41 +395,9 @@
                 </div>
 
                 <!-- Gate Pass Link Section -->
-                <div class="gatepass-container" id="gatePassContainer" style="display: block;">
+                <div class="gatepass-container" id="gatePassContainer">
                     <div class="gatepass-title">Gate Pass Access</div>
                     <a id="gatePassLinkBtn" href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563" target="_blank" rel="noopener noreferrer" class="gatepass-btn">Open Gate Pass ↗</a>
-                </div>
-            </div>
-
-            <!-- Admin Section -->
-            <div class="admin-section" id="adminSection">
-                <h2>Admin Portal</h2>
-                <div id="loginArea" style="display: flex; gap: 10px; flex-direction: column;">
-                    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-                    <button type="button" class="admin-submit" onclick="loginAdmin()">Login to Admin</button>
-                </div>
-
-                <div class="admin-controls" id="adminControlsArea">
-                    <p style="color: #34d399; font-size: 0.8rem; text-align: center; margin-bottom: 2px;">✔ Logged in successfully</p>
-                    
-                    <div>
-                        <label>Upload Background Video</label>
-                        <div class="file-input-wrapper">
-                            <input type="file" id="bgVideoFileInput" accept="video/*" onchange="handleVideoUpload(this)">
-                            <button type="button" class="remove-btn" onclick="removeBgVideo()">Reset</button>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 5px;">
-                        <label>Gate Pass Link</label>
-                        <div style="display: flex; gap: 8px; flex-direction: column;">
-                            <input type="url" id="gatePassUrlInput" placeholder="https://example.com/gate-pass">
-                            <div style="display: flex; gap: 8px;">
-                                <button type="button" class="admin-submit" onclick="saveGatePassUrl()">Save</button>
-                                <button type="button" class="admin-submit remove-btn" onclick="removeGatePassUrl()">Remove</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -551,85 +409,9 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page' + pageNum).classList.add('active');
             
-            const frame = document.querySelector('.mobile-frame');
-            if (frame) frame.scrollTo({ top: 0, behavior: 'smooth' });
-            
             if (pageNum === 1) {
                 setTimeout(initPage1ScratchCard, 50);
             }
-        }
-
-        // --- Secret Trigger: Press '4' four times to Toggle Admin Section ---
-        let pressCount = 0;
-        document.addEventListener('keydown', function(event) {
-            if (event.key === '4') {
-                pressCount++;
-                if (pressCount === 4) {
-                    const adminSec = document.getElementById('adminSection');
-                    adminSec.style.display = adminSec.style.display === 'block' ? 'none' : 'block';
-                    if (adminSec.style.display === 'block') adminSec.scrollIntoView({ behavior: 'smooth' });
-                    pressCount = 0;
-                }
-            } else {
-                pressCount = 0; 
-            }
-        });
-
-        // --- IndexedDB Setup for Permanent Storage ---
-        let db;
-        const dbRequest = indexedDB.open("PartyAppDB", 6);
-
-        dbRequest.onupgradeneeded = function(event) {
-            db = event.target.result;
-            if (!db.objectStoreNames.contains("videos")) db.createObjectStore("videos");
-            if (!db.objectStoreNames.contains("gatepass")) db.createObjectStore("gatepass");
-        };
-
-        dbRequest.onsuccess = function(event) {
-            db = event.target.result;
-            loadSavedVideo();
-            loadSavedGatePassUrl();
-            setTimeout(initPage1ScratchCard, 100);
-        };
-
-        // --- Video Storage Handlers ---
-        function loadSavedVideo() {
-            if (!db) return;
-            const transaction = db.transaction(["videos"], "readonly");
-            const request = transaction.objectStore("videos").get("customBgVideo");
-            request.onsuccess = function(event) {
-                if (event.target.result) playVideoFromBlob(event.target.result);
-            };
-        }
-
-        function handleVideoUpload(input) {
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                const transaction = db.transaction(["videos"], "readwrite");
-                transaction.objectStore("videos").put(file, "customBgVideo");
-                transaction.oncomplete = () => { playVideoFromBlob(file); alert('Background video saved!'); };
-            }
-        }
-
-        function playVideoFromBlob(blob) {
-            const fileURL = URL.createObjectURL(blob);
-            const bgVideoElement = document.getElementById('bgVideoElement');
-            document.getElementById('videoSource').src = fileURL;
-            bgVideoElement.load();
-            bgVideoElement.play().catch(() => {});
-        }
-
-        function removeBgVideo() {
-            if (!db) return;
-            const transaction = db.transaction(["videos"], "readwrite");
-            transaction.objectStore("videos").delete("customBgVideo");
-            transaction.oncomplete = () => {
-                document.getElementById('videoSource').src = "https://assets.mixkit.co/videos/preview/mixkit-party-crowd-of-people-dancing-in-a-club-41618-large.mp4";
-                document.getElementById('bgVideoElement').load();
-                document.getElementById('bgVideoElement').play();
-                document.getElementById('bgVideoFileInput').value = '';
-                alert('Reset background video.');
-            };
         }
 
         // --- Page 1 Scratch Card Setup ---
@@ -646,7 +428,7 @@
             ctx.fillStyle = '#6b7280';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 14px Outfit, sans-serif';
+            ctx.font = 'bold 12px Outfit, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
@@ -665,7 +447,7 @@
                 const pos = getMousePos(e);
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath();
-                ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2);
+                ctx.arc(pos.x, pos.y, 18, 0, Math.PI * 2);
                 ctx.fill();
 
                 if (!popperDone) {
@@ -698,50 +480,7 @@
             canvas.addEventListener('touchend', () => { isDrawing = false; });
         }
 
-        // --- Gate Pass Link Handlers ---
-        function loadSavedGatePassUrl() {
-            if (!db) return;
-            const transaction = db.transaction(["gatepass"], "readonly");
-            const request = transaction.objectStore("gatepass").get("customGatePassUrl");
-            request.onsuccess = function(event) {
-                const url = event.target.result;
-                if (url) {
-                    document.getElementById('gatePassLinkBtn').href = url;
-                    document.getElementById('gatePassContainer').style.display = 'block';
-                    document.getElementById('gatePassUrlInput').value = url;
-                } else {
-                    document.getElementById('gatePassContainer').style.display = 'none';
-                }
-            };
-        }
-
-        function saveGatePassUrl() {
-            const url = document.getElementById('gatePassUrlInput').value.trim();
-            if (!url) {
-                alert('Please enter a valid URL.');
-                return;
-            }
-            if (!db) return;
-            const transaction = db.transaction(["gatepass"], "readwrite");
-            transaction.objectStore("gatepass").put(url, "customGatePassUrl");
-            transaction.oncomplete = () => {
-                document.getElementById('gatePassLinkBtn').href = url;
-                document.getElementById('gatePassContainer').style.display = 'block';
-                alert('Gate pass link saved successfully!');
-            };
-        }
-
-        function removeGatePassUrl() {
-            if (!db) return;
-            const transaction = db.transaction(["gatepass"], "readwrite");
-            transaction.objectStore("gatepass").delete("customGatePassUrl");
-            transaction.oncomplete = () => {
-                document.getElementById('gatePassContainer').style.display = 'none';
-                document.getElementById('gatePassLinkBtn').href = '#';
-                document.getElementById('gatePassUrlInput').value = '';
-                alert('Gate pass link removed.');
-            };
-        }
+        setTimeout(initPage1ScratchCard, 100);
 
         // --- Countdown Timer Logic ---
         const eventDate = new Date("September 5, 2026 18:00:00").getTime();
@@ -768,17 +507,6 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // --- Admin Authentication ---
-        function loginAdmin() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === 'admin123') {
-                document.getElementById('loginArea').style.display = 'none';
-                document.getElementById('adminControlsArea').style.display = 'flex';
-            } else {
-                alert('Incorrect password! Try "admin123"');
-            }
-        }
     </script>
 
 </body>
