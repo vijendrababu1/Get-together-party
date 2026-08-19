@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Let's Get-Together - Exclusive Party</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti for Popper Effect (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --accent: #10b981;
+            --text-color: #000000;
+            --text-muted: #a8a29e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0b0f19;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Video Container */
+        #bgVideoContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;    
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        #bgVideoContainer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        /* Mobile Viewport Wrapper (Strict 9:16 / Vertical 16:9 Ratio Feel) */
+        .mobile-frame {
+            position: relative;
+            z-index: 2;
+            width: 100vw;
+            height: 100vh;
+            max-width: 430px;
+            max-height: 880px;
+            background: #2A445F;
+            border-radius: 0px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: none;
+        }
+
+        @media (min-width: 481px) {
+            .mobile-frame {
+                border-radius: 36px;
+                border: 10px solid #1e293b;
+                height: 85vh;
+            }
+        }
+
+        /* Natural Warm Light Lamp Blinking Effect */
+        .ambient-lamp {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 150px;
+            background: radial-gradient(ellipse at center, rgba(255, 204, 111, 0.25) 0%, rgba(255, 170, 51, 0.05) 50%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+            animation: naturalBlink 6s ease-in-out infinite;
+        }
+
+        @keyframes naturalBlink {
+            0%, 100% { opacity: 0.0; transform: translateX(-50%) scale(1); }
+            30% { opacity: 0.95; transform: translateX(-50%) scale(1.05); }
+            45% { opacity: 0.7; transform: translateX(-50%) scale(0.98); }
+            70% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+            85% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 30px 20px;
+            text-align: center;
+            margin: auto 0;
+            animation: containerEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes containerEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+            animation: fadeInPage 0.6s ease forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
+            50% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+        }
+
+        /* 1st Page Scratch Card Container */
+        .scratch-preview-container {
+            margin: 0 auto 20px auto;
+            max-width: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: #111;
+            position: relative;
+            height: 160px;
+        }
+
+        .scratch-preview-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .scratch-preview-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Detailed Schedule / Itinerary Section */
+        .agenda-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .agenda-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .agenda-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .agenda-item {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .agenda-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+        }
+
+        .agenda-item h4 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .event-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 15px;
+            border-radius: 16px;
+        }
+
+        .detail-card h3 {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .detail-card p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .detail-card a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .detail-card a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Countdown Section */
+        .countdown-container {
+            margin-bottom: 25px;
+        }
+
+        .countdown-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 12px;
+            border-radius: 12px;
+            min-width: 60px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fbbf24;
+        }
+
+        .time-box label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gate Pass Link Section */
+        .gatepass-container {
+            display: none;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .gatepass-title {
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .gatepass-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Admin Section Styling */
+        .admin-section {
+            display: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 25px;
+            padding-top: 20px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .admin-section h2 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+        }
+
+        .admin-controls {
+            display: none;
+            margin-top: 12px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-controls label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .file-input-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .remove-btn {
+            background: #ef4444 !important;
+            padding: 8px 12px !important;
+            font-size: 0.75rem !important;
+            width: auto !important;
+            margin: 0 !important;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        button.admin-submit {
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Background Video Container -->
+    <div id="bgVideoContainer">
+        <video id="bgVideoElement" autoplay muted loop playsinline>
+            <source id="videoSource" src="https://assets.mixkit.co/videos/preview/mixkit-party-crowd-of-people-dancing-in-a-club-41618-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Mobile Viewport Frame (Strict 16:9 / Vertical Mobile Ratio) -->
+    <div class="mobile-frame">
+        <!-- Natural Warm Light Lamp Blinking Effect -->
+        <div class="ambient-lamp"></div>
+
+        <div class="container">
+            
+            <!-- PAGE 1 -->
+            <div class="page active" id="page1">
+                <h1>Let's Get-Together</h1>
+                <p class="subtitle">One gathering, countless laughs, memories that last forever!</p>
+                
+                <div class="tag">You're Invited</div>
+
+                <div class="scratch-preview-container" id="page1ScratchContainer">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41642-large.mp4" type="video/mp4">
+                    </video>
+                    <canvas id="page1ScratchCanvas" class="scratch-preview-canvas" width="278" height="158"></canvas>
+                </div>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="page" id="page2">
+                <div class="agenda-section">
+                    <h2>Event Details</h2>
+                    <div class="agenda-grid">
+                        <div class="agenda-item">
+                            <span>6:00 PM Onwards</span>
+                            <h4>Fun & Frolic with karaoke Evening</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-details">
+                    <div class="detail-card">
+                        <h3>Date</h3>
+                        <p>September 5, 2026</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>Time</h3>
+                        <p>6:00 PM Onwards</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>Location</h3>
+                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">View Location Map</a></p>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="countdown-container">
+                    <div class="countdown-title">Countdown to the Event</div>
+                    <div class="countdown" id="countdown">
+                        <div class="time-box"><span id="days">00</span><label>Days</label></div>
+                        <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+                        <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
+                        <div class="time-box"><span id="seconds">00</span><label>Secs</label></div>
+                    </div>
+                </div>
+
+                <!-- Gate Pass Link Section -->
+                <div class="gatepass-container" id="gatePassContainer" style="display: block;">
+                    <div class="gatepass-title">Gate Pass Access</div>
+                    <a id="gatePassLinkBtn" href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563" target="_blank" rel="noopener noreferrer" class="gatepass-btn">Open Gate Pass ↗</a>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="admin-section" id="adminSection">
+                <h2>Admin Portal</h2>
+                <div id="loginArea" style="display: flex; gap: 10px; flex-direction: column;">
+                    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+                    <button type="button" class="admin-submit" onclick="loginAdmin()">Login to Admin</button>
+                </div>
+
+                <div class="admin-controls" id="adminControlsArea">
+                    <p style="color: #34d399; font-size: 0.8rem; text-align: center; margin-bottom: 2px;">✔ Logged in successfully</p>
+                    
+                    <div>
+                        <label>Upload Background Video</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="bgVideoFileInput" accept="video/*" onchange="handleVideoUpload(this)">
+                            <button type="button" class="remove-btn" onclick="removeBgVideo()">Reset</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 5px;">
+                        <label>Gate Pass Link</label>
+                        <div style="display: flex; gap: 8px; flex-direction: column;">
+                            <input type="url" id="gatePassUrlInput" placeholder="https://example.com/gate-pass">
+                            <div style="display: flex; gap: 8px;">
+                                <button type="button" class="admin-submit" onclick="saveGatePassUrl()">Save</button>
+                                <button type="button" class="admin-submit remove-btn" onclick="removeGatePassUrl()">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Page Navigation Control ---
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            const frame = document.querySelector('.mobile-frame');
+            if (frame) frame.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (pageNum === 1) {
+                setTimeout(initPage1ScratchCard, 50);
+            }
+        }
+
+        // --- Secret Trigger: Press '4' four times to Toggle Admin Section ---
+        let pressCount = 0;
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '4') {
+                pressCount++;
+                if (pressCount === 4) {
+                    const adminSec = document.getElementById('adminSection');
+                    adminSec.style.display = adminSec.style.display === 'block' ? 'none' : 'block';
+                    if (adminSec.style.display === 'block') adminSec.scrollIntoView({ behavior: 'smooth' });
+                    pressCount = 0;
+                }
+            } else {
+                pressCount = 0; 
+            }
+        });
+
+        // --- IndexedDB Setup for Permanent Storage ---
+        let db;
+        const dbRequest = indexedDB.open("PartyAppDB", 6);
+
+        dbRequest.onupgradeneeded = function(event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("videos")) db.createObjectStore("videos");
+            if (!db.objectStoreNames.contains("gatepass")) db.createObjectStore("gatepass");
+        };
+
+        dbRequest.onsuccess = function(event) {
+            db = event.target.result;
+            loadSavedVideo();
+            loadSavedGatePassUrl();
+            setTimeout(initPage1ScratchCard, 100);
+        };
+
+        // --- Video Storage Handlers ---
+        function loadSavedVideo() {
+            if (!db) return;
+            const transaction = db.transaction(["videos"], "readonly");
+            const request = transaction.objectStore("videos").get("customBgVideo");
+            request.onsuccess = function(event) {
+                if (event.target.result) playVideoFromBlob(event.target.result);
+            };
+        }
+
+        function handleVideoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const transaction = db.transaction(["videos"], "readwrite");
+                transaction.objectStore("videos").put(file, "customBgVideo");
+                transaction.oncomplete = () => { playVideoFromBlob(file); alert('Background video saved!'); };
+            }
+        }
+
+        function playVideoFromBlob(blob) {
+            const fileURL = URL.createObjectURL(blob);
+            const bgVideoElement = document.getElementById('bgVideoElement');
+            document.getElementById('videoSource').src = fileURL;
+            bgVideoElement.load();
+            bgVideoElement.play().catch(() => {});
+        }
+
+        function removeBgVideo() {
+            if (!db) return;
+            const transaction = db.transaction(["videos"], "readwrite");
+            transaction.objectStore("videos").delete("customBgVideo");
+            transaction.oncomplete = () => {
+                document.getElementById('videoSource').src = "https://assets.mixkit.co/videos/preview/mixkit-party-crowd-of-people-dancing-in-a-club-41618-large.mp4";
+                document.getElementById('bgVideoElement').load();
+                document.getElementById('bgVideoElement').play();
+                document.getElementById('bgVideoFileInput').value = '';
+                alert('Reset background video.');
+            };
+        }
+
+        // --- Page 1 Scratch Card Setup ---
+        function initPage1ScratchCard() {
+            const canvas = document.getElementById('page1ScratchCanvas');
+            if (!canvas || canvas.offsetWidth === 0) return;
+            const ctx = canvas.getContext('2d');
+            let popperDone = false;
+
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#6b7280';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 14px Outfit, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
+
+            let isDrawing = false;
+
+            function getMousePos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            }
+
+            function scratch(e) {
+                if (!isDrawing) return;
+                const pos = getMousePos(e);
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 20, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (!popperDone) {
+                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    let cleared = 0;
+                    for (let i = 3; i < imgData.data.length; i += 4) {
+                        if (imgData.data[i] === 0) cleared++;
+                    }
+                    if (cleared / (imgData.data.length / 4) > 0.40) {
+                        popperDone = true;
+                        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+                        setTimeout(() => {
+                            goToPage(2);
+                        }, 400);
+                    }
+                }
+            }
+
+            canvas.onmousedown = null;
+            canvas.onmousemove = null;
+            canvas.ontouchstart = null;
+            canvas.ontouchmove = null;
+
+            canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('mousemove', scratch);
+            window.addEventListener('mouseup', () => { isDrawing = false; });
+
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); e.preventDefault(); }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); }, { passive: false });
+            canvas.addEventListener('touchend', () => { isDrawing = false; });
+        }
+
+        // --- Gate Pass Link Handlers ---
+        function loadSavedGatePassUrl() {
+            if (!db) return;
+            const transaction = db.transaction(["gatepass"], "readonly");
+            const request = transaction.objectStore("gatepass").get("customGatePassUrl");
+            request.onsuccess = function(event) {
+                const url = event.target.result;
+                if (url) {
+                    document.getElementById('gatePassLinkBtn').href = url;
+                    document.getElementById('gatePassContainer').style.display = 'block';
+                    document.getElementById('gatePassUrlInput').value = url;
+                } else {
+                    document.getElementById('gatePassContainer').style.display = 'none';
+                }
+            };
+        }
+
+        function saveGatePassUrl() {
+            const url = document.getElementById('gatePassUrlInput').value.trim();
+            if (!url) {
+                alert('Please enter a valid URL.');
+                return;
+            }
+            if (!db) return;
+            const transaction = db.transaction(["gatepass"], "readwrite");
+            transaction.objectStore("gatepass").put(url, "customGatePassUrl");
+            transaction.oncomplete = () => {
+                document.getElementById('gatePassLinkBtn').href = url;
+                document.getElementById('gatePassContainer').style.display = 'block';
+                alert('Gate pass link saved successfully!');
+            };
+        }
+
+        function removeGatePassUrl() {
+            if (!db) return;
+            const transaction = db.transaction(["gatepass"], "readwrite");
+            transaction.objectStore("gatepass").delete("customGatePassUrl");
+            transaction.oncomplete = () => {
+                document.getElementById('gatePassContainer').style.display = 'none';
+                document.getElementById('gatePassLinkBtn').href = '#';
+                document.getElementById('gatePassUrlInput').value = '';
+                alert('Gate pass link removed.');
+            };
+        }
+
+        // --- Countdown Timer Logic ---
+        const eventDate = new Date("September 5, 2026 18:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<p style='color: #10b981; font-weight: 600;'>The event has started or concluded!</p>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- Admin Authentication ---
+        function loginAdmin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === 'admin123') {
+                document.getElementById('loginArea').style.display = 'none';
+                document.getElementById('adminControlsArea').style.display = 'flex';
+            } else {
+                alert('Incorrect password! Try "admin123"');
+            }
+        }
+    </script>
+
+</body>
+</html>
