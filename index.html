@@ -263,59 +263,19 @@
             text-decoration: underline;
         }
 
-        /* Countdown Section */
-        .countdown-container {
-            margin-bottom: 8px;
-        }
-
-        .countdown-title {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .time-box {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 4px;
-            border-radius: 8px;
-            min-width: 44px;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #fbbf24;
-        }
-
-        .time-box label {
-            font-size: 0.52rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
         /* Gate Pass Link Section */
         .gatepass-container {
             display: block !important;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 8px;
+            padding: 10px;
             border-radius: 10px;
         }
 
         .gatepass-title {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -323,13 +283,13 @@
 
         .gatepass-btn {
             display: inline-block;
-            padding: 7px 16px;
+            padding: 8px 18px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             text-decoration: none;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
         }
     </style>
@@ -380,17 +340,6 @@
                     <div class="detail-card">
                         <h3>Location</h3>
                         <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">Map ↗</a></p>
-                    </div>
-                </div>
-
-                <!-- Countdown Timer -->
-                <div class="countdown-container">
-                    <div class="countdown-title">Countdown to Event</div>
-                    <div class="countdown" id="countdown">
-                        <div class="time-box"><span id="days">00</span><label>Days</label></div>
-                        <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
-                        <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
-                        <div class="time-box"><span id="seconds">00</span><label>Secs</label></div>
                     </div>
                 </div>
 
@@ -481,32 +430,6 @@
         }
 
         setTimeout(initPage1ScratchCard, 100);
-
-        // --- Countdown Timer Logic ---
-        const eventDate = new Date("September 5, 2026 18:00:00").getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = eventDate - now;
-
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<p style='color: #10b981; font-weight: 600;'>The event has started or concluded!</p>";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
     </script>
 
 </body>
