@@ -76,6 +76,9 @@
             animation: naturalBlink 6s ease-in-out infinite;
         }
 
+
+
+
         @keyframes naturalBlink {
             0%, 100% { opacity: 0.0; transform: translateX(-50%) scale(1); }
             30% { opacity: 0.95; transform: translateX(-50%) scale(1.05); }
@@ -225,16 +228,16 @@
 
         .event-details {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin-bottom: 8px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
+            margin-bottom: 2px;
         }
 
         .detail-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 8px 4px;
-            border-radius: 10px;
+            padding: 4px 4px;
+            border-radius: 5px;
             text-align: center;
         }
 
@@ -311,7 +314,7 @@
                 <div class="tag">You're Invited</div>
 
                 <div class="scratch-preview-container" id="page1ScratchContainer">
-                    <div class="scratch-reveal-content">✨ Get Ready! ✨</div>
+                    <div class="scratch-reveal-content"> Get Ready! </div>
                     <canvas id="page1ScratchCanvas" class="scratch-preview-canvas" width="238" height="128"></canvas>
                 </div>
             </div>
@@ -339,14 +342,23 @@
                     </div>
                     <div class="detail-card">
                         <h3>Location</h3>
-                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">Map ↗</a></p>
+                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">Map </a></p>
                     </div>
+                    <div class="detail-card">
+                        <h3>Parking</h3>
+                        <p>Basement 2</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>Metro</h3>
+                        <p>Sandalwood</p>
+                    </div>
+
                 </div>
 
                 <!-- Gate Pass Link Section -->
                 <div class="gatepass-container" id="gatePassContainer">
                     <div class="gatepass-title">Gate Pass Access</div>
-                    <a id="gatePassLinkBtn" href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563" target="_blank" rel="noopener noreferrer" class="gatepass-btn">Open Gate Pass ↗</a>
+                    <a id="gatePassLinkBtn" href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563" target="_blank" rel="noopener noreferrer" class="gatepass-btn">Open Gate Pass</a>
                 </div>
             </div>
         </div>
