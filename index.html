@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Let's Get-Together - Exclusive Party</title>
-    
-    <!-- Google Fonts -->
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Canvas Confetti for Popper Effect (CDN) -->
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
+
     <style>
         :root {
             --primary: #f59e0b;
@@ -26,11 +24,18 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Outfit', sans-serif;
             background: #0b0f19;
             color: var(--text-color);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,14 +43,13 @@
             position: relative;
         }
 
-        /* Mobile Viewport Frame - Fixed 16:9 vertical ratio box */
         .mobile-frame {
             position: relative;
             z-index: 2;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
+            min-height: 100vh;
             max-width: 410px;
-            max-height: 820px;
             background: #2A445F;
             display: flex;
             flex-direction: column;
@@ -56,13 +60,14 @@
 
         @media (min-width: 411px) {
             .mobile-frame {
+                width: 410px;
+                height: 85vh;
+                min-height: auto;
                 border-radius: 28px;
                 border: 8px solid #1e293b;
-                height: 85vh;
             }
         }
 
-        /* Natural Warm Light Lamp Blinking Effect */
         .ambient-lamp {
             position: absolute;
             top: -40px;
@@ -70,32 +75,55 @@
             transform: translateX(-50%);
             width: 250px;
             height: 120px;
-            background: radial-gradient(ellipse at center, rgba(255, 204, 111, 0.25) 0%, rgba(255, 170, 51, 0.05) 50%, transparent 70%);
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 204, 111, 0.25) 0%,
+                rgba(255, 170, 51, 0.05) 50%,
+                transparent 70%
+            );
             z-index: 1;
             pointer-events: none;
             animation: naturalBlink 6s ease-in-out infinite;
         }
 
-
-
-
         @keyframes naturalBlink {
-            0%, 100% { opacity: 0.0; transform: translateX(-50%) scale(1); }
-            30% { opacity: 0.95; transform: translateX(-50%) scale(1.05); }
-            45% { opacity: 0.7; transform: translateX(-50%) scale(0.98); }
-            70% { opacity: 1; transform: translateX(-50%) scale(1.08); }
-            85% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(1);
+            }
+
+            30% {
+                opacity: 0.95;
+                transform: translateX(-50%) scale(1.05);
+            }
+
+            45% {
+                opacity: 0.7;
+                transform: translateX(-50%) scale(0.98);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.08);
+            }
+
+            85% {
+                opacity: 0.8;
+                transform: translateX(-50%) scale(1);
+            }
         }
 
         .container {
             position: relative;
             z-index: 2;
             width: 100%;
+            max-width: 100%;
             padding: 12px 14px;
             text-align: center;
             animation: containerEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
             transform: translateY(10px);
+            overflow: hidden;
         }
 
         @keyframes containerEntrance {
@@ -105,18 +133,27 @@
             }
         }
 
-        /* Page Management */
         .page {
             display: none;
+            width: 100%;
+            max-width: 100%;
         }
+
         .page.active {
             display: block;
             animation: fadeInPage 0.4s ease forwards;
         }
 
         @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .tag {
@@ -133,14 +170,14 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        /* 1st Page Scratch Card Container */
         .scratch-preview-container {
             margin: 0 auto 10px auto;
+            width: 100%;
             max-width: 240px;
             border-radius: 12px;
             overflow: hidden;
             border: 2px solid rgba(245, 158, 11, 0.4);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             background: #111;
             position: relative;
             height: 130px;
@@ -182,34 +219,49 @@
             line-height: 1.3;
         }
 
-        /* Detailed Schedule / Itinerary Section */
         .agenda-section {
+            width: 100%;
+            max-width: 100%;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
-            padding: 8px 10px;
+            padding: 10px;
             margin-bottom: 8px;
             text-align: left;
+            overflow: hidden;
         }
 
         .agenda-section h2 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.6rem;
+            font-size: clamp(0.72rem, 2.6vw, 0.9rem);
+            line-height: 1.35;
             color: #FFFFFF;
-            margin-bottom: 4px;
+            margin-bottom: 7px;
             text-align: center;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .agenda-section h1 {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
         }
 
         .agenda-grid {
             display: grid;
+            grid-template-columns: 1fr;
             gap: 4px;
         }
 
         .agenda-item {
+            width: 100%;
             background: rgba(0, 0, 0, 0.25);
             padding: 6px 8px;
             border-radius: 6px;
             border-left: 2px solid var(--primary);
+            overflow: hidden;
         }
 
         .agenda-item span {
@@ -223,42 +275,53 @@
 
         .agenda-item h4 {
             font-size: 0.78rem;
+            line-height: 1.25;
             color: #fff;
+            overflow-wrap: anywhere;
         }
 
         .event-details {
+            width: 100%;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 2px;
-            margin-bottom: 2px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px;
+            margin-bottom: 7px;
         }
 
         .detail-card {
+            min-width: 0;
+            width: 100%;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 4px 4px;
+            padding: 6px 5px;
             border-radius: 5px;
             text-align: center;
+            overflow: hidden;
         }
 
         .detail-card h3 {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 2px;
+            white-space: nowrap;
         }
 
         .detail-card p {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+            line-height: 1.2;
             font-weight: 600;
             color: #fff;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         .detail-card a {
             color: #fff;
             text-decoration: none;
             font-size: 0.7rem;
+            overflow-wrap: anywhere;
         }
 
         .detail-card a:hover {
@@ -266,19 +329,20 @@
             text-decoration: underline;
         }
 
-        /* Gate Pass Link Section */
         .gatepass-container {
+            width: 100%;
             display: block !important;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 10px;
+            padding: 8px 10px;
             border-radius: 10px;
+            overflow: hidden;
         }
 
         .gatepass-title {
             font-size: 0.7rem;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -286,8 +350,14 @@
 
         .gatepass-btn {
             display: inline-block;
+            width: auto;
+            min-width: 120px;
             padding: 8px 18px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--primary-dark)
+            );
             color: white;
             text-decoration: none;
             border-radius: 6px;
@@ -295,154 +365,519 @@
             font-size: 0.85rem;
             box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
         }
-    </style>
-</head>
-<body>
 
-    <!-- Mobile Viewport Frame -->
-    <div class="mobile-frame">
-        <!-- Natural Warm Light Lamp Blinking Effect -->
-        <div class="ambient-lamp"></div>
+        @media (max-width: 360px) {
+            .container {
+                padding: 8px 10px;
+            }
 
-        <div class="container">
-            
-            <!-- PAGE 1 -->
-            <div class="page active" id="page1">
-                <h1>Let's Get-Together</h1>
-                <p class="subtitle">One gathering, countless laughs, memories that last forever!</p>
-                
-                <div class="tag">You're Invited</div>
+            .agenda-section {
+                padding: 8px;
+            }
 
-                <div class="scratch-preview-container" id="page1ScratchContainer">
-                    <div class="scratch-reveal-content"> Get Ready! </div>
-                    <canvas id="page1ScratchCanvas" class="scratch-preview-canvas" width="238" height="128"></canvas>
-                </div>
-            </div>
+            .agenda-section h2 {
+                font-size: 0.68rem;
+                line-height: 1.3;
+            }
 
-            <!-- PAGE 2 -->
-            <div class="page" id="page2">
-                <div class="agenda-section">
-                    <h2>Dear colleague , VB has invited you for an evening cocktail with dinner at his residence on 5th Sep ( Sat ) evening details of which is attached along with Gate entry code . You have to enter your phone no to get the gate code . Parking is in B2. Look forward to your presence</h2>
-                    <h1>Event Details</h1>
-                    <div class="agenda-grid">
-                        <div class="agenda-item">
-                            <span>6:00 PM Onwards</span>
-                            <h4>Fun & Frolic with karaoke Evening</h4>
-                        </div>
-                    </div>
-                </div>
+            .agenda-item h4 {
+                font-size: 0.7rem;
+            }
 
-                <div class="event-details">
-                    <div class="detail-card">
-                        <h3>Date</h3>
-                        <p>Sep 5, 2026</p>
-                    </div>
-                    <div class="detail-card">
-                        <h3>Time</h3>
-                        <p>6:00 PM</p>
-                    </div>
-                    <div class="detail-card">
-                        <h3>Location</h3>
-                        <p><a href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8" target="_blank" rel="noopener noreferrer">Map link</a></p>
-                    </div>
-                    <div class="detail-card">
-                        <h3>Parking</h3>
-                        <p>Basement 2</p>
-                    </div>
-                    <div class="detail-card">
-                        <h3>Metro</h3>
-                        <p>Sandalwood</p>
-                    </div>
+            .detail-card {
+                padding: 5px 3px;
+            }
 
-                </div>
+            .detail-card h3 {
+                font-size: 0.52rem;
+            }
 
-                <!-- Gate Pass Link Section -->
-                <div class="gatepass-container" id="gatePassContainer">
-                    <div class="gatepass-title">Gate Entry</div>
-                    <a id="gatePassLinkBtn" href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563" target="_blank" rel="noopener noreferrer" class="gatepass-btn">Get Code</a>
-                </div>
-            </div>
-        </div>
-    </div>
+            .detail-card p {
+                font-size: 0.65rem;
+            }
 
-    <script>
-        // --- Page Navigation Control ---
-        function goToPage(pageNum) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page' + pageNum).classList.add('active');
-            
-            if (pageNum === 1) {
-                setTimeout(initPage1ScratchCard, 50);
+            .detail-card a {
+                font-size: 0.63rem;
+            }
+
+            .gatepass-container {
+                padding: 7px;
+            }
+
+            .gatepass-btn {
+                padding: 7px 16px;
+                font-size: 0.78rem;
             }
         }
 
-        // --- Page 1 Scratch Card Setup ---
+        @media (max-height: 650px) {
+            .container {
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+
+            .agenda-section {
+                padding: 7px;
+                margin-bottom: 5px;
+            }
+
+            .agenda-section h2 {
+                font-size: 0.67rem;
+                line-height: 1.25;
+                margin-bottom: 4px;
+            }
+
+            .agenda-section h1 {
+                font-size: 0.78rem;
+            }
+
+            .agenda-item {
+                padding: 4px 6px;
+            }
+
+            .agenda-item span {
+                font-size: 0.52rem;
+            }
+
+            .agenda-item h4 {
+                font-size: 0.65rem;
+            }
+
+            .event-details {
+                gap: 3px;
+                margin-bottom: 5px;
+            }
+
+            .detail-card {
+                padding: 4px 3px;
+            }
+
+            .detail-card h3 {
+                font-size: 0.5rem;
+            }
+
+            .detail-card p,
+            .detail-card a {
+                font-size: 0.62rem;
+            }
+
+            .gatepass-container {
+                padding: 6px;
+            }
+
+            .gatepass-title {
+                font-size: 0.6rem;
+                margin-bottom: 3px;
+            }
+
+            .gatepass-btn {
+                padding: 6px 14px;
+                font-size: 0.72rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-frame">
+
+        <div class="ambient-lamp"></div>
+
+        <div class="container">
+
+            <!-- PAGE 1 -->
+            <div class="page active" id="page1">
+
+                <h1>Let's Get-Together</h1>
+
+                <p class="subtitle">
+                    One gathering, countless laughs, memories that last forever!
+                </p>
+
+                <div class="tag">You're Invited</div>
+
+                <div class="scratch-preview-container" id="page1ScratchContainer">
+
+                    <div class="scratch-reveal-content">
+                        Get Ready!
+                    </div>
+
+                    <canvas
+                        id="page1ScratchCanvas"
+                        class="scratch-preview-canvas"
+                        width="238"
+                        height="128">
+                    </canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAGE 2 -->
+            <div class="page" id="page2">
+
+                <div class="agenda-section">
+
+                    <h2>
+                        Dear colleague , VB has invited you for an evening cocktail with dinner at his residence on 5th Sep ( Sat ) evening details of which is attached along with Gate entry code . You have to enter your phone no to get the gate code . Parking is in B2. Look forward to your presence
+                    </h2>
+
+                    <h1>Event Details</h1>
+
+                    <div class="agenda-grid">
+
+                        <div class="agenda-item">
+
+                            <span>6:00 PM Onwards</span>
+
+                            <h4>
+                                Fun & Frolic with karaoke Evening
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event-details">
+
+                    <div class="detail-card">
+
+                        <h3>Date</h3>
+
+                        <p>
+                            Sep 5, 2026
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <h3>Time</h3>
+
+                        <p>
+                            6:00 PM
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <h3>Location</h3>
+
+                        <p>
+                            <a
+                                href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Map link
+                            </a>
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <h3>Parking</h3>
+
+                        <p>
+                            Basement 2
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <h3>Metro</h3>
+
+                        <p>
+                            Sandalwood
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Gate Pass Link Section -->
+                <div class="gatepass-container" id="gatePassContainer">
+
+                    <div class="gatepass-title">
+                        Gate Entry
+                    </div>
+
+                    <a
+                        id="gatePassLinkBtn"
+                        href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="gatepass-btn">
+                        Get Code
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Page Navigation Control
+        function goToPage(pageNum) {
+
+            document.querySelectorAll('.page').forEach(function(page) {
+                page.classList.remove('active');
+            });
+
+            document.getElementById('page' + pageNum).classList.add('active');
+
+            if (pageNum === 1) {
+
+                setTimeout(initPage1ScratchCard, 50);
+
+            }
+
+        }
+
+
+        // Page 1 Scratch Card Setup
         function initPage1ScratchCard() {
+
             const canvas = document.getElementById('page1ScratchCanvas');
-            if (!canvas || canvas.offsetWidth === 0) return;
+
+            if (!canvas || canvas.offsetWidth === 0) {
+                return;
+            }
+
             const ctx = canvas.getContext('2d');
+
             let popperDone = false;
 
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
 
             ctx.globalCompositeOperation = 'source-over';
+
             ctx.fillStyle = '#6b7280';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
             ctx.fillStyle = '#ffffff';
+
             ctx.font = 'bold 12px Outfit, sans-serif';
+
             ctx.textAlign = 'center';
+
             ctx.textBaseline = 'middle';
-            ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
+
+            ctx.fillText(
+                'Scratch Here',
+                canvas.width / 2,
+                canvas.height / 2
+            );
+
 
             let isDrawing = false;
 
+
             function getMousePos(e) {
+
                 const rect = canvas.getBoundingClientRect();
-                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-                return { x: clientX - rect.left, y: clientY - rect.top };
+
+                const clientX =
+                    e.clientX ||
+                    (e.touches && e.touches[0].clientX);
+
+                const clientY =
+                    e.clientY ||
+                    (e.touches && e.touches[0].clientY);
+
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+
             }
+
 
             function scratch(e) {
-                if (!isDrawing) return;
+
+                if (!isDrawing) {
+                    return;
+                }
+
                 const pos = getMousePos(e);
+
                 ctx.globalCompositeOperation = 'destination-out';
+
                 ctx.beginPath();
-                ctx.arc(pos.x, pos.y, 18, 0, Math.PI * 2);
+
+                ctx.arc(
+                    pos.x,
+                    pos.y,
+                    18,
+                    0,
+                    Math.PI * 2
+                );
+
                 ctx.fill();
 
+
                 if (!popperDone) {
-                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    const imgData =
+                        ctx.getImageData(
+                            0,
+                            0,
+                            canvas.width,
+                            canvas.height
+                        );
+
                     let cleared = 0;
-                    for (let i = 3; i < imgData.data.length; i += 4) {
-                        if (imgData.data[i] === 0) cleared++;
+
+                    for (
+                        let i = 3;
+                        i < imgData.data.length;
+                        i += 4
+                    ) {
+
+                        if (imgData.data[i] === 0) {
+                            cleared++;
+                        }
+
                     }
-                    if (cleared / (imgData.data.length / 4) > 0.40) {
+
+
+                    if (
+                        cleared /
+                        (imgData.data.length / 4)
+                        > 0.40
+                    ) {
+
                         popperDone = true;
-                        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
-                        setTimeout(() => {
+
+                        confetti({
+                            particleCount: 120,
+                            spread: 80,
+                            origin: {
+                                y: 0.5
+                            }
+                        });
+
+
+                        setTimeout(function() {
+
                             goToPage(2);
+
                         }, 400);
+
                     }
+
                 }
+
             }
+
 
             canvas.onmousedown = null;
             canvas.onmousemove = null;
             canvas.ontouchstart = null;
             canvas.ontouchmove = null;
 
-            canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
-            canvas.addEventListener('mousemove', scratch);
-            window.addEventListener('mouseup', () => { isDrawing = false; });
 
-            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); e.preventDefault(); }, { passive: false });
-            canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); }, { passive: false });
-            canvas.addEventListener('touchend', () => { isDrawing = false; });
+            canvas.addEventListener(
+                'mousedown',
+                function(e) {
+
+                    isDrawing = true;
+
+                    scratch(e);
+
+                }
+            );
+
+
+            canvas.addEventListener(
+                'mousemove',
+                scratch
+            );
+
+
+            window.addEventListener(
+                'mouseup',
+                function() {
+
+                    isDrawing = false;
+
+                }
+            );
+
+
+            canvas.addEventListener(
+                'touchstart',
+                function(e) {
+
+                    isDrawing = true;
+
+                    scratch(e);
+
+                    e.preventDefault();
+
+                },
+                {
+                    passive: false
+                }
+            );
+
+
+            canvas.addEventListener(
+                'touchmove',
+                function(e) {
+
+                    scratch(e);
+
+                    e.preventDefault();
+
+                },
+                {
+                    passive: false
+                }
+            );
+
+
+            canvas.addEventListener(
+                'touchend',
+                function() {
+
+                    isDrawing = false;
+
+                }
+            );
+
         }
 
-        setTimeout(initPage1ScratchCard, 100);
+
+        setTimeout(
+            initPage1ScratchCard,
+            100
+        );
+
     </script>
 
 </body>
