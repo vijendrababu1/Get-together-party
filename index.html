@@ -797,7 +797,10 @@
                         </div>
 
 
-                        <!-- LOCATION -->
+                        <!-- =========================
+                             LOCATION
+                             IOS FIX
+                        ========================== -->
 
                         <div class="detail">
 
@@ -808,11 +811,10 @@
                             <div class="detail-value">
 
                                 <a
-                                    href="https://maps.app.goo.gl/UJcg2d4FEaq7gZvH6"
+                                    href="https://www.google.com/maps/dir/?api=1&destination=13.0098561,77.5533004&travelmode=driving"
                                     class="map-link"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    onclick="openGoogleMaps(event)"
                                 >
                                     View Map
                                 </a>
@@ -1166,19 +1168,22 @@
 
 
         /* ==========================================
-           GOOGLE MAPS
-           UPDATED LOCATION
-        ========================================== */
+           GOOGLE MAPS - IOS SAFE
+           ========================================== */
 
-        function openGoogleMaps(event) {
+        /*
+         * Do NOT use maps.app.goo.gl here.
+         * Do NOT use comgooglemaps:// here.
+         *
+         * Full HTTPS Google Maps URL is used.
+         * iOS can open Google Maps when installed,
+         * otherwise it opens Google Maps in browser.
+         */
 
-            event.preventDefault();
-
-            const mapsLink =
-                "https://maps.app.goo.gl/UJcg2d4FEaq7gZvH6";
-
-            window.location.href = mapsLink;
-        }
+        const googleMapsURL =
+            "https://www.google.com/maps/dir/?api=1" +
+            "&destination=13.0098561,77.5533004" +
+            "&travelmode=driving";
 
 
         /* INITIALIZE */
