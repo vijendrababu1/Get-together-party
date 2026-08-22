@@ -80,6 +80,7 @@
             content: "";
             position: absolute;
             inset: 0;
+
             background:
                 linear-gradient(
                     90deg,
@@ -87,6 +88,7 @@
                     rgba(255,255,255,.018) 50%,
                     transparent 50.2%
                 );
+
             pointer-events: none;
         }
 
@@ -94,8 +96,10 @@
             content: "";
             position: absolute;
             inset: 12px;
+
             border: 1px solid rgba(216,170,85,.12);
             border-radius: 22px;
+
             pointer-events: none;
             z-index: 10;
         }
@@ -104,16 +108,21 @@
             position: absolute;
             width: 330px;
             height: 330px;
+
             top: -180px;
             left: 50%;
+
             transform: translateX(-50%);
+
             background:
                 radial-gradient(
                     circle,
                     rgba(244,213,138,.22),
                     transparent 65%
                 );
+
             filter: blur(8px);
+
             animation: glow 6s ease-in-out infinite;
         }
 
@@ -132,10 +141,13 @@
 
         .decor {
             position: absolute;
+
             width: 180px;
             height: 180px;
+
             border: 1px solid rgba(216,170,85,.08);
             border-radius: 50%;
+
             pointer-events: none;
         }
 
@@ -152,17 +164,22 @@
         .content {
             position: relative;
             z-index: 5;
+
             width: 100%;
             height: 100%;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 25px 22px;
         }
 
         .page {
             display: none;
+
             width: 100%;
+
             animation: pageIn .65s cubic-bezier(.16,1,.3,1);
         }
 
@@ -182,6 +199,7 @@
             }
         }
 
+
         /* =========================
            PAGE 1
         ========================== */
@@ -193,20 +211,28 @@
         .eyebrow {
             display: inline-flex;
             align-items: center;
+
             gap: 8px;
+
             color: var(--gold-light);
+
             font-size: 10px;
             letter-spacing: 3px;
+
             text-transform: uppercase;
+
             font-weight: 600;
+
             margin-bottom: 17px;
         }
 
         .eyebrow::before,
         .eyebrow::after {
             content: "";
+
             width: 24px;
             height: 1px;
+
             background:
                 linear-gradient(
                     90deg,
@@ -226,48 +252,75 @@
 
         .main-title {
             font-family: 'Playfair Display', serif;
+
             font-size: clamp(2.3rem, 10vw, 3.4rem);
+
             line-height: 1.02;
+
             font-weight: 600;
+
             color: var(--cream);
+
             letter-spacing: -.8px;
         }
 
         .main-title span {
             display: block;
+
             color: var(--gold-light);
+
             font-style: italic;
         }
 
         .subtitle {
             max-width: 320px;
+
             margin: 15px auto 22px;
+
             color: var(--muted);
+
             font-size: 13px;
+
             line-height: 1.65;
+
             font-weight: 300;
         }
 
         .invite-pill {
             display: inline-block;
+
             padding: 7px 15px;
+
             border: 1px solid rgba(216,170,85,.35);
+
             border-radius: 50px;
+
             color: var(--gold-light);
+
             background: rgba(216,170,85,.07);
+
             font-size: 9px;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
+
             margin-bottom: 20px;
         }
 
         .scratch-wrap {
             position: relative;
+
             width: min(100%, 285px);
+
             height: 160px;
+
             margin: 0 auto;
+
             border-radius: 18px;
+
             padding: 1px;
+
             background:
                 linear-gradient(
                     135deg,
@@ -283,9 +336,12 @@
 
         .scratch-inner {
             position: relative;
+
             width: 100%;
             height: 100%;
+
             border-radius: 17px;
+
             overflow: hidden;
 
             background:
@@ -297,56 +353,80 @@
                 #101722;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
         }
 
         .scratch-message {
             text-align: center;
+
             z-index: 1;
         }
 
         .scratch-message small {
             display: block;
+
             color: var(--muted);
+
             font-size: 9px;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
+
             margin-bottom: 8px;
         }
 
         .scratch-message strong {
             font-family: 'Playfair Display', serif;
+
             font-size: 24px;
+
             font-weight: 600;
+
             color: var(--gold-light);
         }
 
         .scratch-message em {
             display: block;
+
             margin-top: 5px;
+
             color: #d8d2c7;
+
             font-size: 11px;
+
             font-style: normal;
         }
 
         #scratchCanvas {
             position: absolute;
+
             inset: 0;
+
             width: 100%;
             height: 100%;
+
             cursor: crosshair;
+
             touch-action: none;
+
             z-index: 3;
         }
 
         .swipe-hint {
             margin-top: 15px;
+
             color: #777e89;
+
             font-size: 9px;
+
             letter-spacing: 1.4px;
+
             text-transform: uppercase;
         }
+
 
         /* =========================
            PAGE 2
@@ -354,7 +434,9 @@
 
         .event-card {
             width: 100%;
+
             padding: 20px;
+
             border-radius: 22px;
 
             background:
@@ -375,146 +457,215 @@
 
         .event-top {
             text-align: center;
+
             margin-bottom: 16px;
         }
 
         .event-label {
             color: var(--gold-light);
+
             font-size: 9px;
+
             text-transform: uppercase;
+
             letter-spacing: 2.5px;
+
             font-weight: 600;
+
             margin-bottom: 7px;
         }
 
         .event-title {
             font-family: 'Playfair Display', serif;
+
             color: var(--cream);
+
             font-size: 26px;
+
             line-height: 1.1;
+
             font-weight: 600;
         }
 
         .event-title span {
             color: var(--gold-light);
+
             font-style: italic;
         }
 
         .invitation {
             text-align: center;
+
             color: #d1ccc1;
+
             font-family: 'Cormorant Garamond', serif;
+
             font-size: 15px;
+
             line-height: 1.45;
+
             padding: 13px 8px;
+
             margin-bottom: 12px;
 
             border-top: 1px solid rgba(216,170,85,.18);
+
             border-bottom: 1px solid rgba(216,170,85,.18);
         }
 
         .agenda {
             background: rgba(0,0,0,.18);
+
             border-radius: 13px;
+
             padding: 11px 13px;
+
             margin-bottom: 10px;
+
             border: 1px solid rgba(255,255,255,.055);
         }
 
         .agenda-label {
             color: var(--gold);
+
             font-size: 8px;
+
             letter-spacing: 1.8px;
+
             text-transform: uppercase;
+
             font-weight: 700;
+
             margin-bottom: 4px;
         }
 
         .agenda-title {
             color: white;
+
             font-size: 13px;
+
             line-height: 1.3;
         }
 
         .details {
             display: grid;
+
             grid-template-columns: repeat(2, minmax(0, 1fr));
+
             gap: 7px;
+
             margin-bottom: 10px;
         }
 
         .detail {
             min-width: 0;
+
             padding: 9px 7px;
+
             text-align: center;
+
             border-radius: 11px;
+
             background: rgba(255,255,255,.035);
+
             border: 1px solid rgba(255,255,255,.06);
         }
 
         .detail-label {
             color: #8e929a;
+
             font-size: 7px;
+
             letter-spacing: 1.2px;
+
             text-transform: uppercase;
+
             margin-bottom: 3px;
         }
 
         .detail-value {
             color: #f4f1e9;
+
             font-size: 11px;
+
             font-weight: 600;
+
             line-height: 1.25;
+
             overflow-wrap: anywhere;
         }
 
+
         /* =========================
            GOOGLE MAPS BUTTON
-           IOS SAFE
         ========================== */
 
         .map-link {
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
 
             min-height: 32px;
+
             padding: 5px 10px;
 
             color: var(--gold-light);
+
             text-decoration: none;
 
             cursor: pointer;
+
             touch-action: manipulation;
+
             -webkit-user-select: none;
+
             user-select: none;
         }
 
         .map-link:active {
             opacity: .7;
+
             transform: scale(.97);
         }
 
+
+        /* =========================
+           GATE
+        ========================== */
+
         .gate {
             text-align: center;
+
             padding-top: 2px;
         }
 
         .gate-label {
             color: var(--gold);
+
             font-size: 8px;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
+
             font-weight: 700;
+
             margin-bottom: 7px;
         }
 
         .gate-btn {
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
+
             min-width: 145px;
+
             padding: 10px 22px;
+
             border-radius: 50px;
 
             background:
@@ -525,8 +676,11 @@
                 );
 
             color: #17120a;
+
             font-size: 12px;
+
             font-weight: 700;
+
             text-decoration: none;
 
             box-shadow:
@@ -534,8 +688,11 @@
                 inset 0 1px 0 rgba(255,255,255,.5);
 
             cursor: pointer;
+
             touch-action: manipulation;
+
             -webkit-user-select: none;
+
             user-select: none;
         }
 
@@ -545,11 +702,16 @@
 
         .footer-note {
             text-align: center;
+
             margin-top: 11px;
+
             color: #707680;
+
             font-size: 8px;
+
             letter-spacing: 1px;
         }
+
 
         /* =========================
            SMALL PHONES
@@ -563,6 +725,7 @@
 
             .event-card {
                 padding: 15px;
+
                 border-radius: 18px;
             }
 
@@ -572,6 +735,7 @@
 
             .invitation {
                 font-size: 13px;
+
                 padding: 10px 5px;
             }
 
@@ -588,6 +752,7 @@
             }
         }
 
+
         /* =========================
            SHORT PHONES
         ========================== */
@@ -596,6 +761,7 @@
 
             .content {
                 padding-top: 12px;
+
                 padding-bottom: 12px;
             }
 
@@ -625,17 +791,21 @@
 
             .invitation {
                 font-size: 12.5px;
+
                 padding: 8px 5px;
+
                 margin-bottom: 7px;
             }
 
             .agenda {
                 padding: 8px 10px;
+
                 margin-bottom: 7px;
             }
 
             .details {
                 gap: 5px;
+
                 margin-bottom: 7px;
             }
 
@@ -648,6 +818,7 @@
             }
         }
 
+
         /* =========================
            DESKTOP FRAME
         ========================== */
@@ -656,6 +827,7 @@
 
             .mobile-frame {
                 height: 90vh;
+
                 border-radius: 30px;
 
                 box-shadow:
@@ -663,18 +835,24 @@
                     0 0 0 8px rgba(255,255,255,.025);
             }
         }
+
     </style>
 </head>
+
 
 <body>
 
     <div class="mobile-frame">
 
         <div class="ambient-glow"></div>
+
         <div class="decor one"></div>
+
         <div class="decor two"></div>
 
+
         <main class="content">
+
 
             <!-- =========================
                  PAGE 1
@@ -684,43 +862,68 @@
 
                 <div class="intro">
 
+
                     <div class="eyebrow">
                         You're Invited
                     </div>
 
+
                     <h1 class="main-title">
+
                         Let's
-                        <span>Get-Together</span>
+
+                        <span>
+                            Get-Together
+                        </span>
+
                     </h1>
 
+
                     <p class="subtitle">
+
                         One gathering, countless laughs,
                         memories that last forever.
+
                     </p>
+
 
                     <div class="invite-pill">
                         An Exclusive Party
                     </div>
 
+
                     <div class="scratch-wrap">
 
                         <div class="scratch-inner">
 
+
                             <div class="scratch-message">
+
                                 <small></small>
-                                <strong>Get Ready!</strong>
+
+                                <strong>
+                                    Get Ready!
+                                </strong>
+
                                 <em></em>
+
                             </div>
 
+
                             <canvas id="scratchCanvas"></canvas>
+
 
                         </div>
 
                     </div>
 
+
                     <div class="swipe-hint">
+
                         ✦ Scratch to reveal ✦
+
                     </div>
+
 
                 </div>
 
@@ -735,41 +938,55 @@
 
                 <div class="event-card">
 
+
                     <div class="event-top">
 
                         <div class="event-label"></div>
 
                         <h2 class="event-title">
-                            Let's <span>Celebrate</span>
+
+                            Let's
+                            <span>Celebrate</span>
+
                         </h2>
 
                     </div>
 
 
                     <div class="invitation">
+
                         Dear colleague, VB has invited you for an evening
                         cocktail with dinner at his residence on 5th Sep
                         (Sat) evening. Details of which are attached along
                         with Gate entry code. You have to enter your phone
                         no. to get the gate code. Parking is in B2.
                         Look forward to your presence.
+
                     </div>
 
 
                     <div class="agenda">
 
                         <div class="agenda-label">
+
                             Evening Highlights
+
                         </div>
 
+
                         <div class="agenda-title">
+
                             6:00 PM Onwards · Fun & Frolic with Karaoke Evening
+
                         </div>
 
                     </div>
 
 
                     <div class="details">
+
+
+                        <!-- DATE -->
 
                         <div class="detail">
 
@@ -784,6 +1001,8 @@
                         </div>
 
 
+                        <!-- TIME -->
+
                         <div class="detail">
 
                             <div class="detail-label">
@@ -797,10 +1016,7 @@
                         </div>
 
 
-                        <!-- =========================
-                             LOCATION
-                             IOS FIX
-                        ========================== -->
+                        <!-- LOCATION -->
 
                         <div class="detail">
 
@@ -811,7 +1027,7 @@
                             <div class="detail-value">
 
                                 <a
-                                    href="https://www.google.com/maps/dir/?api=1&destination=13.0098561,77.5533004&travelmode=driving"
+                                    href="https://www.google.com/maps/place/Phoenix+Kessaku/@13.0098561,77.5507255,17z/data=!4m6!3m5!1s0x3bae3d7881d31ced:0x5867abe5cb6fcf8f!8m2!3d13.0098561!4d77.5533004!16s%2Fg%2F11ckscyx55?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D"
                                     class="map-link"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -823,6 +1039,8 @@
 
                         </div>
 
+
+                        <!-- PARKING -->
 
                         <div class="detail">
 
@@ -837,6 +1055,8 @@
                         </div>
 
 
+                        <!-- METRO -->
+
                         <div class="detail">
 
                             <div class="detail-label">
@@ -849,16 +1069,20 @@
 
                         </div>
 
+
                     </div>
 
 
-                    <!-- GATE ENTRY -->
+                    <!-- =========================
+                         GATE ENTRY
+                    ========================== -->
 
                     <div class="gate">
 
                         <div class="gate-label">
                             Gate Entry
                         </div>
+
 
                         <a
                             class="gate-btn"
@@ -869,16 +1093,21 @@
                             Get Gate Code
                         </a>
 
+
                     </div>
 
 
                     <div class="footer-note">
+
                         Looking forward to your presence
+
                     </div>
+
 
                 </div>
 
             </section>
+
 
         </main>
 
@@ -887,38 +1116,69 @@
 
     <script>
 
+
         /* ==========================================
            SCRATCH CARD
         ========================================== */
 
-        const canvas = document.getElementById("scratchCanvas");
-        const ctx = canvas.getContext("2d");
+
+        const canvas =
+            document.getElementById("scratchCanvas");
+
+        const ctx =
+            canvas.getContext("2d");
+
 
         let isDrawing = false;
+
         let revealed = false;
 
 
         function setupCanvas() {
 
-            const rect = canvas.getBoundingClientRect();
+            const rect =
+                canvas.getBoundingClientRect();
 
-            canvas.width = rect.width;
-            canvas.height = rect.height;
 
-            ctx.globalCompositeOperation = "source-over";
+            canvas.width =
+                rect.width;
 
-            const gradient = ctx.createLinearGradient(
+            canvas.height =
+                rect.height;
+
+
+            ctx.globalCompositeOperation =
+                "source-over";
+
+
+            const gradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+
+            gradient.addColorStop(
                 0,
-                0,
-                canvas.width,
-                canvas.height
+                "#7d6742"
             );
 
-            gradient.addColorStop(0, "#7d6742");
-            gradient.addColorStop(.45, "#b99a61");
-            gradient.addColorStop(1, "#6e5838");
+            gradient.addColorStop(
+                .45,
+                "#b99a61"
+            );
 
-            ctx.fillStyle = gradient;
+            gradient.addColorStop(
+                1,
+                "#6e5838"
+            );
+
+
+            ctx.fillStyle =
+                gradient;
+
 
             ctx.fillRect(
                 0,
@@ -927,15 +1187,31 @@
                 canvas.height
             );
 
-            ctx.fillStyle = "rgba(255,255,255,.12)";
 
-            for (let i = 0; i < 100; i++) {
+            ctx.fillStyle =
+                "rgba(255,255,255,.12)";
 
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const r = Math.random() * 2;
+
+            for (
+                let i = 0;
+                i < 100;
+                i++
+            ) {
+
+                const x =
+                    Math.random() *
+                    canvas.width;
+
+                const y =
+                    Math.random() *
+                    canvas.height;
+
+                const r =
+                    Math.random() * 2;
+
 
                 ctx.beginPath();
+
 
                 ctx.arc(
                     x,
@@ -945,59 +1221,107 @@
                     Math.PI * 2
                 );
 
+
                 ctx.fill();
+
             }
 
-            ctx.fillStyle = "#fff8e8";
-            ctx.font = "600 12px Outfit, sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
+
+            ctx.fillStyle =
+                "#fff8e8";
+
+
+            ctx.font =
+                "600 12px Outfit, sans-serif";
+
+
+            ctx.textAlign =
+                "center";
+
+
+            ctx.textBaseline =
+                "middle";
+
 
             ctx.fillText(
                 "SCRATCH HERE",
                 canvas.width / 2,
                 canvas.height / 2
             );
+
         }
 
 
         function getPosition(e) {
 
-            const rect = canvas.getBoundingClientRect();
+            const rect =
+                canvas.getBoundingClientRect();
+
 
             let clientX;
+
             let clientY;
 
-            if (e.touches && e.touches.length) {
 
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
+            if (
+                e.touches &&
+                e.touches.length
+            ) {
+
+                clientX =
+                    e.touches[0].clientX;
+
+                clientY =
+                    e.touches[0].clientY;
 
             } else {
 
-                clientX = e.clientX;
-                clientY = e.clientY;
+                clientX =
+                    e.clientX;
+
+                clientY =
+                    e.clientY;
+
             }
 
+
             return {
-                x: clientX - rect.left,
-                y: clientY - rect.top
+
+                x:
+                    clientX -
+                    rect.left,
+
+                y:
+                    clientY -
+                    rect.top
+
             };
+
         }
 
 
         function scratch(e) {
 
-            if (!isDrawing || revealed) {
+            if (
+                !isDrawing ||
+                revealed
+            ) {
+
                 return;
+
             }
 
-            const pos = getPosition(e);
+
+            const pos =
+                getPosition(e);
+
 
             ctx.globalCompositeOperation =
                 "destination-out";
 
+
             ctx.beginPath();
+
 
             ctx.arc(
                 pos.x,
@@ -1007,26 +1331,35 @@
                 Math.PI * 2
             );
 
+
             ctx.fill();
 
+
             checkReveal();
+
         }
 
 
         function checkReveal() {
 
             if (revealed) {
+
                 return;
+
             }
 
-            const imageData = ctx.getImageData(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
+
+            const imageData =
+                ctx.getImageData(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
 
             let transparent = 0;
+
 
             for (
                 let i = 3;
@@ -1034,18 +1367,30 @@
                 i += 4
             ) {
 
-                if (imageData.data[i] < 50) {
+                if (
+                    imageData.data[i] <
+                    50
+                ) {
+
                     transparent++;
+
                 }
+
             }
+
 
             const percentage =
                 transparent /
                 (imageData.data.length / 4);
 
-            if (percentage > .42) {
+
+            if (
+                percentage >
+                .42
+            ) {
 
                 revealed = true;
+
 
                 ctx.clearRect(
                     0,
@@ -1054,41 +1399,75 @@
                     canvas.height
                 );
 
-                if (typeof confetti === "function") {
+
+                if (
+                    typeof confetti ===
+                    "function"
+                ) {
 
                     confetti({
+
                         particleCount: 160,
+
                         spread: 100,
+
                         startVelocity: 35,
+
                         origin: {
+
                             x: .5,
+
                             y: .5
+
                         }
+
                     });
+
                 }
 
-                setTimeout(() => {
 
-                    document
-                        .getElementById("page1")
-                        .classList.remove("active");
+                setTimeout(
+                    () => {
 
-                    document
-                        .getElementById("page2")
-                        .classList.add("active");
+                        document
+                            .getElementById(
+                                "page1"
+                            )
+                            .classList
+                            .remove(
+                                "active"
+                            );
 
-                }, 650);
+
+                        document
+                            .getElementById(
+                                "page2"
+                            )
+                            .classList
+                            .add(
+                                "active"
+                            );
+
+                    },
+                    650
+                );
+
             }
+
         }
 
 
-        /* DESKTOP SCRATCH */
+        /* ==========================================
+           DESKTOP SCRATCH
+        ========================================== */
+
 
         canvas.addEventListener(
             "mousedown",
             function(e) {
 
                 isDrawing = true;
+
                 scratch(e);
 
             }
@@ -1111,7 +1490,10 @@
         );
 
 
-        /* IOS / ANDROID TOUCH */
+        /* ==========================================
+           IOS / ANDROID TOUCH
+        ========================================== */
+
 
         canvas.addEventListener(
             "touchstart",
@@ -1155,12 +1537,19 @@
         );
 
 
+        /* ==========================================
+           RESIZE
+        ========================================== */
+
+
         window.addEventListener(
             "resize",
             function() {
 
                 if (!revealed) {
+
                     setupCanvas();
+
                 }
 
             }
@@ -1168,27 +1557,12 @@
 
 
         /* ==========================================
-           GOOGLE MAPS - IOS SAFE
-           ========================================== */
+           INITIALIZE
+        ========================================== */
 
-        /*
-         * Do NOT use maps.app.goo.gl here.
-         * Do NOT use comgooglemaps:// here.
-         *
-         * Full HTTPS Google Maps URL is used.
-         * iOS can open Google Maps when installed,
-         * otherwise it opens Google Maps in browser.
-         */
-
-        const googleMapsURL =
-            "https://www.google.com/maps/dir/?api=1" +
-            "&destination=13.0098561,77.5533004" +
-            "&travelmode=driving";
-
-
-        /* INITIALIZE */
 
         setupCanvas();
+
 
     </script>
 
