@@ -1,946 +1,1191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Let's Get-Together | Exclusive Evening</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-:root {
-    --gold: #d8aa55;
-    --gold-light: #f4d58a;
-    --gold-dark: #a97827;
-    --cream: #fff8e8;
-    --white: #ffffff;
-    --muted: #b9b3a7;
-    --bg: #080b12;
-    --card: rgba(255,255,255,.055);
-    --border: rgba(255,255,255,.12);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    font-family: 'Outfit', sans-serif;
-    background:
-        radial-gradient(circle at 50% 0%, #273244 0%, #0d131d 42%, #05070b 100%);
-    color: var(--white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.mobile-frame {
-    position: relative;
-    width: 100%;
-    max-width: 430px;
-    height: 100vh;
-    max-height: 900px;
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 8%, rgba(216,170,85,.15), transparent 30%),
-        linear-gradient(160deg, #182333 0%, #0d141f 45%, #080b12 100%);
-}
-
-.mobile-frame::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(90deg, transparent 49.8%, rgba(255,255,255,.018) 50%, transparent 50.2%);
-    pointer-events: none;
-}
-
-.mobile-frame::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border: 1px solid rgba(216,170,85,.12);
-    border-radius: 22px;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.ambient-glow {
-    position: absolute;
-    width: 330px;
-    height: 330px;
-    top: -180px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(244,213,138,.22), transparent 65%);
-    filter: blur(8px);
-    animation: glow 6s ease-in-out infinite;
-}
-
-@keyframes glow {
-    0%,100% { opacity: .35; transform: translateX(-50%) scale(.95); }
-    50% { opacity: .8; transform: translateX(-50%) scale(1.08); }
-}
-
-.decor {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border: 1px solid rgba(216,170,85,.08);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.decor.one {
-    top: 8%;
-    left: -120px;
-}
-
-.decor.two {
-    bottom: 5%;
-    right: -120px;
-}
-
-.content {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px 22px;
-}
-
-.page {
-    display: none;
-    width: 100%;
-    animation: pageIn .65s cubic-bezier(.16,1,.3,1);
-}
-
-.page.active {
-    display: block;
-}
-
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* PAGE 1 */
-
-.intro {
-    text-align: center;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--gold-light);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 17px;
-}
-
-.eyebrow::before,
-.eyebrow::after {
-    content: "";
-    width: 24px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold));
-}
-
-.eyebrow::after {
-    background: linear-gradient(90deg, var(--gold), transparent);
-}
-
-.main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.3rem, 10vw, 3.4rem);
-    line-height: 1.02;
-    font-weight: 600;
-    color: var(--cream);
-    letter-spacing: -.8px;
-}
-
-.main-title span {
-    display: block;
-    color: var(--gold-light);
-    font-style: italic;
-}
-
-.subtitle {
-    max-width: 320px;
-    margin: 15px auto 22px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.65;
-    font-weight: 300;
-}
-
-.invite-pill {
-    display: inline-block;
-    padding: 7px 15px;
-    border: 1px solid rgba(216,170,85,.35);
-    border-radius: 50px;
-    color: var(--gold-light);
-    background: rgba(216,170,85,.07);
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.scratch-wrap {
-    position: relative;
-    width: min(100%, 285px);
-    height: 160px;
-    margin: 0 auto;
-    border-radius: 18px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(244,213,138,.65), rgba(216,170,85,.05), rgba(244,213,138,.4));
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.45),
-        0 0 45px rgba(216,170,85,.08);
-}
-
-.scratch-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 17px;
-    overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 50%, rgba(216,170,85,.16), transparent 60%),
-        #101722;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.scratch-message {
-    text-align: center;
-    z-index: 1;
-}
-
-.scratch-message small {
-    display: block;
-    color: var(--muted);
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.scratch-message strong {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--gold-light);
-}
-
-.scratch-message em {
-    display: block;
-    margin-top: 5px;
-    color: #d8d2c7;
-    font-size: 11px;
-    font-style: normal;
-}
-
-#scratchCanvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    cursor: crosshair;
-    touch-action: none;
-    z-index: 3;
-}
-
-.swipe-hint {
-    margin-top: 15px;
-    color: #777e89;
-    font-size: 9px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-}
-
-/* PAGE 2 */
-
-.event-card {
-    width: 100%;
-    padding: 20px;
-    border-radius: 22px;
-    background:
-        linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
-    border: 1px solid var(--border);
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.4),
-        inset 0 1px 0 rgba(255,255,255,.06);
-    backdrop-filter: blur(18px);
-}
-
-.event-top {
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.event-label {
-    color: var(--gold-light);
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    font-weight: 600;
-    margin-bottom: 7px;
-}
-
-.event-title {
-    font-family: 'Playfair Display', serif;
-    color: var(--cream);
-    font-size: 26px;
-    line-height: 1.1;
-    font-weight: 600;
-}
-
-.event-title span {
-    color: var(--gold-light);
-    font-style: italic;
-}
-
-.invitation {
-    text-align: center;
-    color: #d1ccc1;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    line-height: 1.45;
-    padding: 13px 8px;
-    margin-bottom: 12px;
-    border-top: 1px solid rgba(216,170,85,.18);
-    border-bottom: 1px solid rgba(216,170,85,.18);
-}
-
-.agenda {
-    background: rgba(0,0,0,.18);
-    border-radius: 13px;
-    padding: 11px 13px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(255,255,255,.055);
-}
-
-.agenda-label {
-    color: var(--gold);
-    font-size: 8px;
-    letter-spacing: 1.8px;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.agenda-title {
-    color: white;
-    font-size: 13px;
-    line-height: 1.3;
-}
-
-.details {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-    margin-bottom: 10px;
-}
-
-.detail {
-    min-width: 0;
-    padding: 9px 7px;
-    text-align: center;
-    border-radius: 11px;
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.06);
-}
-
-.detail-label {
-    color: #8e929a;
-    font-size: 7px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-}
-
-.detail-value {
-    color: #f4f1e9;
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.25;
-    overflow-wrap: anywhere;
-}
-
-.detail-value a {
-    color: var(--gold-light);
-    text-decoration: none;
-}
-
-.gate {
-    text-align: center;
-    padding-top: 2px;
-}
-
-.gate-label {
-    color: var(--gold);
-    font-size: 8px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 7px;
-}
-
-.gate-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 145px;
-    padding: 10px 22px;
-    border-radius: 50px;
-    background: linear-gradient(135deg, #f2ce7e, #bd8831);
-    color: #17120a;
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow:
-        0 8px 25px rgba(216,170,85,.22),
-        inset 0 1px 0 rgba(255,255,255,.5);
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.gate-btn:active {
-    transform: scale(.96);
-}
-
-.footer-note {
-    text-align: center;
-    margin-top: 11px;
-    color: #707680;
-    font-size: 8px;
-    letter-spacing: 1px;
-}
-
-/* SMALL PHONES */
-
-@media (max-width: 360px) {
-    .content {
-        padding: 16px;
-    }
-
-    .event-card {
-        padding: 15px;
-        border-radius: 18px;
-    }
-
-    .event-title {
-        font-size: 22px;
-    }
-
-    .invitation {
-        font-size: 13px;
-        padding: 10px 5px;
-    }
-
-    .detail {
-        padding: 7px 4px;
-    }
-
-    .detail-value {
-        font-size: 10px;
-    }
-
-    .scratch-wrap {
-        height: 140px;
-    }
-}
-
-/* SHORT PHONES */
-
-@media (max-height: 680px) {
-    .content {
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
-
-    .main-title {
-        font-size: 2.2rem;
-    }
-
-    .subtitle {
-        margin: 10px auto 14px;
-    }
-
-    .scratch-wrap {
-        height: 130px;
-    }
-
-    .event-card {
-        padding: 14px;
-    }
-
-    .event-top {
-        margin-bottom: 9px;
-    }
-
-    .event-title {
-        font-size: 22px;
-    }
-
-    .invitation {
-        font-size: 12.5px;
-        padding: 8px 5px;
-        margin-bottom: 7px;
-    }
-
-    .agenda {
-        padding: 8px 10px;
-        margin-bottom: 7px;
-    }
-
-    .details {
-        gap: 5px;
-        margin-bottom: 7px;
-    }
-
-    .detail {
-        padding: 6px 4px;
-    }
-
-    .gate-btn {
-        padding: 8px 20px;
-    }
-}
-
-/* DESKTOP FRAME */
-
-@media (min-width: 431px) {
-    .mobile-frame {
-        height: 90vh;
-        border-radius: 30px;
-        box-shadow:
-            0 40px 100px rgba(0,0,0,.6),
-            0 0 0 8px rgba(255,255,255,.025);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Let's Get-Together | Exclusive Evening</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --gold: #d8aa55;
+            --gold-light: #f4d58a;
+            --gold-dark: #a97827;
+            --cream: #fff8e8;
+            --white: #ffffff;
+            --muted: #b9b3a7;
+            --bg: #080b12;
+            --card: rgba(255,255,255,.055);
+            --border: rgba(255,255,255,.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    #273244 0%,
+                    #0d131d 42%,
+                    #05070b 100%
+                );
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-frame {
+            position: relative;
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            max-height: 900px;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 8%,
+                    rgba(216,170,85,.15),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    160deg,
+                    #182333 0%,
+                    #0d141f 45%,
+                    #080b12 100%
+                );
+        }
+
+        .mobile-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 49.8%,
+                    rgba(255,255,255,.018) 50%,
+                    transparent 50.2%
+                );
+            pointer-events: none;
+        }
+
+        .mobile-frame::after {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(216,170,85,.12);
+            border-radius: 22px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            top: -180px;
+            left: 50%;
+            transform: translateX(-50%);
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244,213,138,.22),
+                    transparent 65%
+                );
+            filter: blur(8px);
+            animation: glow 6s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%,
+            100% {
+                opacity: .35;
+                transform: translateX(-50%) scale(.95);
+            }
+
+            50% {
+                opacity: .8;
+                transform: translateX(-50%) scale(1.08);
+            }
+        }
+
+        .decor {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(216,170,85,.08);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .decor.one {
+            top: 8%;
+            left: -120px;
+        }
+
+        .decor.two {
+            bottom: 5%;
+            right: -120px;
+        }
+
+        .content {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 22px;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            animation: pageIn .65s cubic-bezier(.16,1,.3,1);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* =========================
+           PAGE 1
+        ========================== */
+
+        .intro {
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold-light);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 17px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 24px;
+            height: 1px;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--gold)
+                );
+        }
+
+        .eyebrow::after {
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--gold),
+                    transparent
+                );
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.3rem, 10vw, 3.4rem);
+            line-height: 1.02;
+            font-weight: 600;
+            color: var(--cream);
+            letter-spacing: -.8px;
+        }
+
+        .main-title span {
+            display: block;
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .subtitle {
+            max-width: 320px;
+            margin: 15px auto 22px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .invite-pill {
+            display: inline-block;
+            padding: 7px 15px;
+            border: 1px solid rgba(216,170,85,.35);
+            border-radius: 50px;
+            color: var(--gold-light);
+            background: rgba(216,170,85,.07);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .scratch-wrap {
+            position: relative;
+            width: min(100%, 285px);
+            height: 160px;
+            margin: 0 auto;
+            border-radius: 18px;
+            padding: 1px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(244,213,138,.65),
+                    rgba(216,170,85,.05),
+                    rgba(244,213,138,.4)
+                );
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,.45),
+                0 0 45px rgba(216,170,85,.08);
+        }
+
+        .scratch-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 17px;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(216,170,85,.16),
+                    transparent 60%
+                ),
+                #101722;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scratch-message {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .scratch-message small {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .scratch-message strong {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        .scratch-message em {
+            display: block;
+            margin-top: 5px;
+            color: #d8d2c7;
+            font-size: 11px;
+            font-style: normal;
+        }
+
+        #scratchCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+            z-index: 3;
+        }
+
+        .swipe-hint {
+            margin-top: 15px;
+            color: #777e89;
+            font-size: 9px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        /* =========================
+           PAGE 2
+        ========================== */
+
+        .event-card {
+            width: 100%;
+            padding: 20px;
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.075),
+                    rgba(255,255,255,.025)
+                );
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.4),
+                inset 0 1px 0 rgba(255,255,255,.06);
+
+            backdrop-filter: blur(18px);
+        }
+
+        .event-top {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .event-label {
+            color: var(--gold-light);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .event-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--cream);
+            font-size: 26px;
+            line-height: 1.1;
+            font-weight: 600;
+        }
+
+        .event-title span {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .invitation {
+            text-align: center;
+            color: #d1ccc1;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            line-height: 1.45;
+            padding: 13px 8px;
+            margin-bottom: 12px;
+
+            border-top: 1px solid rgba(216,170,85,.18);
+            border-bottom: 1px solid rgba(216,170,85,.18);
+        }
+
+        .agenda {
+            background: rgba(0,0,0,.18);
+            border-radius: 13px;
+            padding: 11px 13px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,.055);
+        }
+
+        .agenda-label {
+            color: var(--gold);
+            font-size: 8px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .agenda-title {
+            color: white;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+            margin-bottom: 10px;
+        }
+
+        .detail {
+            min-width: 0;
+            padding: 9px 7px;
+            text-align: center;
+            border-radius: 11px;
+            background: rgba(255,255,255,.035);
+            border: 1px solid rgba(255,255,255,.06);
+        }
+
+        .detail-label {
+            color: #8e929a;
+            font-size: 7px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            color: #f4f1e9;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+        }
+
+        /* =========================
+           GOOGLE MAPS BUTTON
+           IOS SAFE
+        ========================== */
+
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 32px;
+            padding: 5px 10px;
+
+            color: var(--gold-light);
+            text-decoration: none;
+
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .map-link:active {
+            opacity: .7;
+            transform: scale(.97);
+        }
+
+        .gate {
+            text-align: center;
+            padding-top: 2px;
+        }
+
+        .gate-label {
+            color: var(--gold);
+            font-size: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .gate-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 145px;
+            padding: 10px 22px;
+            border-radius: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f2ce7e,
+                    #bd8831
+                );
+
+            color: #17120a;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+
+            box-shadow:
+                0 8px 25px rgba(216,170,85,.22),
+                inset 0 1px 0 rgba(255,255,255,.5);
+
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .gate-btn:active {
+            transform: scale(.96);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 11px;
+            color: #707680;
+            font-size: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           SMALL PHONES
+        ========================== */
+
+        @media (max-width: 360px) {
+
+            .content {
+                padding: 16px;
+            }
+
+            .event-card {
+                padding: 15px;
+                border-radius: 18px;
+            }
+
+            .event-title {
+                font-size: 22px;
+            }
+
+            .invitation {
+                font-size: 13px;
+                padding: 10px 5px;
+            }
+
+            .detail {
+                padding: 7px 4px;
+            }
+
+            .detail-value {
+                font-size: 10px;
+            }
+
+            .scratch-wrap {
+                height: 140px;
+            }
+        }
+
+        /* =========================
+           SHORT PHONES
+        ========================== */
+
+        @media (max-height: 680px) {
+
+            .content {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            .main-title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                margin: 10px auto 14px;
+            }
+
+            .scratch-wrap {
+                height: 130px;
+            }
+
+            .event-card {
+                padding: 14px;
+            }
+
+            .event-top {
+                margin-bottom: 9px;
+            }
+
+            .event-title {
+                font-size: 22px;
+            }
+
+            .invitation {
+                font-size: 12.5px;
+                padding: 8px 5px;
+                margin-bottom: 7px;
+            }
+
+            .agenda {
+                padding: 8px 10px;
+                margin-bottom: 7px;
+            }
+
+            .details {
+                gap: 5px;
+                margin-bottom: 7px;
+            }
+
+            .detail {
+                padding: 6px 4px;
+            }
+
+            .gate-btn {
+                padding: 8px 20px;
+            }
+        }
+
+        /* =========================
+           DESKTOP FRAME
+        ========================== */
+
+        @media (min-width: 431px) {
+
+            .mobile-frame {
+                height: 90vh;
+                border-radius: 30px;
+
+                box-shadow:
+                    0 40px 100px rgba(0,0,0,.6),
+                    0 0 0 8px rgba(255,255,255,.025);
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="mobile-frame">
+    <div class="mobile-frame">
 
-    <div class="ambient-glow"></div>
-    <div class="decor one"></div>
-    <div class="decor two"></div>
+        <div class="ambient-glow"></div>
+        <div class="decor one"></div>
+        <div class="decor two"></div>
 
-    <main class="content">
+        <main class="content">
 
-        <!-- PAGE 1 -->
-        <section class="page active" id="page1">
+            <!-- =========================
+                 PAGE 1
+            ========================== -->
 
-            <div class="intro">
+            <section class="page active" id="page1">
 
-                <div class="eyebrow">
-                    You're Invited
-                </div>
+                <div class="intro">
 
-                <h1 class="main-title">
-                    Let's
-                    <span>Get-Together</span>
-                </h1>
+                    <div class="eyebrow">
+                        You're Invited
+                    </div>
 
-                <p class="subtitle">
-                    One gathering, countless laughs,
-                    memories that last forever.
-                </p>
+                    <h1 class="main-title">
+                        Let's
+                        <span>Get-Together</span>
+                    </h1>
 
-                <div class="invite-pill">
-                    An Exclusive Party
-                </div>
+                    <p class="subtitle">
+                        One gathering, countless laughs,
+                        memories that last forever.
+                    </p>
 
-                <div class="scratch-wrap">
+                    <div class="invite-pill">
+                        An Exclusive Party
+                    </div>
 
-                    <div class="scratch-inner">
+                    <div class="scratch-wrap">
 
-                        <div class="scratch-message">
-                            <small></small>
-                            <strong>Get Ready!</strong>
-                            <em></em>
+                        <div class="scratch-inner">
+
+                            <div class="scratch-message">
+                                <small></small>
+                                <strong>Get Ready!</strong>
+                                <em></em>
+                            </div>
+
+                            <canvas id="scratchCanvas"></canvas>
+
                         </div>
 
-                        <canvas id="scratchCanvas"></canvas>
+                    </div>
 
+                    <div class="swipe-hint">
+                        ✦ Scratch to reveal ✦
                     </div>
 
                 </div>
 
-                <div class="swipe-hint">
-                    ✦ Scratch to reveal ✦
-                </div>
-
-            </div>
-
-        </section>
+            </section>
 
 
-        <!-- PAGE 2 -->
-        <section class="page" id="page2">
+            <!-- =========================
+                 PAGE 2
+            ========================== -->
 
-            <div class="event-card">
+            <section class="page" id="page2">
 
-                <div class="event-top">
+                <div class="event-card">
 
-                    <div class="event-label">
-                       
+                    <div class="event-top">
+
+                        <div class="event-label"></div>
+
+                        <h2 class="event-title">
+                            Let's <span>Celebrate</span>
+                        </h2>
+
                     </div>
 
-                    <h2 class="event-title">
-                        Let's <span>Celebrate</span>
-                    </h2>
 
-                </div>
-
-
-                <div class="invitation">
-                    Dear colleague , VB has invited you for an evening cocktail with dinner at his residence on 5th Sep ( Sat ) evening details of which is attached along with Gate entry code . You have to enter your phone no to get the gate code . Parking is in B2. Look forward to your presence
-                </div>
-
-
-                <div class="agenda">
-
-                    <div class="agenda-label">
-                        Evening Highlights
+                    <div class="invitation">
+                        Dear colleague, VB has invited you for an evening
+                        cocktail with dinner at his residence on 5th Sep
+                        (Sat) evening. Details of which are attached along
+                        with Gate entry code. You have to enter your phone
+                        no. to get the gate code. Parking is in B2.
+                        Look forward to your presence.
                     </div>
 
-                    <div class="agenda-title">
-                        6:00 PM Onwards · Fun & Frolic with karaoke Evening
-                    </div>
 
-                </div>
+                    <div class="agenda">
 
-
-                <div class="details">
-
-                    <div class="detail">
-                        <div class="detail-label">Date</div>
-                        <div class="detail-value">
-                            Sep 5, 2026
+                        <div class="agenda-label">
+                            Evening Highlights
                         </div>
+
+                        <div class="agenda-title">
+                            6:00 PM Onwards · Fun & Frolic with Karaoke Evening
+                        </div>
+
                     </div>
 
-                    <div class="detail">
-                        <div class="detail-label">Time</div>
-                        <div class="detail-value">
-                            6:00 PM
+
+                    <div class="details">
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Date
+                            </div>
+
+                            <div class="detail-value">
+                                Sep 5, 2026
+                            </div>
+
                         </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Time
+                            </div>
+
+                            <div class="detail-value">
+                                6:00 PM
+                            </div>
+
+                        </div>
+
+
+                        <!-- LOCATION -->
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Location
+                            </div>
+
+                            <div class="detail-value">
+
+                                <a
+                                    href="https://maps.app.goo.gl/UJcg2d4FEaq7gZvH6"
+                                    class="map-link"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onclick="openGoogleMaps(event)"
+                                >
+                                    View Map
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Parking
+                            </div>
+
+                            <div class="detail-value">
+                                Basement 2
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Metro
+                            </div>
+
+                            <div class="detail-value">
+                                Sandalwood
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="detail">
-                        <div class="detail-label">Location</div>
-                        <div class="detail-value">
-                            <a 
-				href="https://maps.app.goo.gl/UL5feDp5uJnNsLbw8"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                View Map
-                            </a>
+
+                    <!-- GATE ENTRY -->
+
+                    <div class="gate">
+
+                        <div class="gate-label">
+                            Gate Entry
                         </div>
+
+                        <a
+                            class="gate-btn"
+                            href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Get Gate Code
+                        </a>
+
                     </div>
 
-                    <div class="detail">
-                        <div class="detail-label">Parking</div>
-                        <div class="detail-value">
-                            Basement 2
-                        </div>
-                    </div>
 
-                    <div class="detail">
-                        <div class="detail-label">Metro</div>
-                        <div class="detail-value">
-                            Sandalwood
-                        </div>
+                    <div class="footer-note">
+                        Looking forward to your presence
                     </div>
 
                 </div>
 
+            </section>
 
-                <div class="gate">
+        </main>
 
-                    <div class="gate-label">
-                        Gate Entry
-                    </div>
-
-                    <a class="gate-btn"
-                       href="https://uap.mygate.com/grp-invite/6a85805be2980427e078c563"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Get Gate Code
-                    </a>
-
-                </div>
+    </div>
 
 
-                <div class="footer-note">
-                    Looking forward to your presence
-                </div>
+    <script>
 
-            </div>
+        /* ==========================================
+           SCRATCH CARD
+        ========================================== */
 
-        </section>
+        const canvas = document.getElementById("scratchCanvas");
+        const ctx = canvas.getContext("2d");
 
-    </main>
+        let isDrawing = false;
+        let revealed = false;
 
-</div>
 
+        function setupCanvas() {
 
-<script>
+            const rect = canvas.getBoundingClientRect();
 
-const canvas = document.getElementById("scratchCanvas");
-const ctx = canvas.getContext("2d");
+            canvas.width = rect.width;
+            canvas.height = rect.height;
 
-let isDrawing = false;
-let revealed = false;
+            ctx.globalCompositeOperation = "source-over";
 
-function setupCanvas() {
+            const gradient = ctx.createLinearGradient(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
 
-    const rect = canvas.getBoundingClientRect();
+            gradient.addColorStop(0, "#7d6742");
+            gradient.addColorStop(.45, "#b99a61");
+            gradient.addColorStop(1, "#6e5838");
 
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+            ctx.fillStyle = gradient;
 
-    ctx.globalCompositeOperation = "source-over";
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
 
-    const gradient = ctx.createLinearGradient(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+            ctx.fillStyle = "rgba(255,255,255,.12)";
 
-    gradient.addColorStop(0, "#7d6742");
-    gradient.addColorStop(.45, "#b99a61");
-    gradient.addColorStop(1, "#6e5838");
+            for (let i = 0; i < 100; i++) {
 
-    ctx.fillStyle = gradient;
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const r = Math.random() * 2;
 
-    ctx.fillStyle = "rgba(255,255,255,.12)";
+                ctx.beginPath();
 
-    for (let i = 0; i < 100; i++) {
+                ctx.arc(
+                    x,
+                    y,
+                    r,
+                    0,
+                    Math.PI * 2
+                );
 
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const r = Math.random() * 2;
+                ctx.fill();
+            }
 
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fill();
+            ctx.fillStyle = "#fff8e8";
+            ctx.font = "600 12px Outfit, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
 
-    }
-
-    ctx.fillStyle = "#fff8e8";
-    ctx.font = "600 12px Outfit, sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(
-        "SCRATCH HERE",
-        canvas.width / 2,
-        canvas.height / 2
-    );
-}
-
-function getPosition(e) {
-
-    const rect = canvas.getBoundingClientRect();
-
-    let clientX;
-    let clientY;
-
-    if (e.touches && e.touches.length) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-    } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-    }
-
-    return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-    };
-}
-
-function scratch(e) {
-
-    if (!isDrawing || revealed) return;
-
-    const pos = getPosition(e);
-
-    ctx.globalCompositeOperation = "destination-out";
-
-    ctx.beginPath();
-    ctx.arc(
-        pos.x,
-        pos.y,
-        24,
-        0,
-        Math.PI * 2
-    );
-    ctx.fill();
-
-    checkReveal();
-}
-
-function checkReveal() {
-
-    if (revealed) return;
-
-    const imageData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    let transparent = 0;
-
-    for (
-        let i = 3;
-        i < imageData.data.length;
-        i += 4
-    ) {
-        if (imageData.data[i] < 50) {
-            transparent++;
+            ctx.fillText(
+                "SCRATCH HERE",
+                canvas.width / 2,
+                canvas.height / 2
+            );
         }
-    }
 
-    const percentage =
-        transparent /
-        (imageData.data.length / 4);
 
-    if (percentage > .42) {
+        function getPosition(e) {
 
-        revealed = true;
+            const rect = canvas.getBoundingClientRect();
 
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
+            let clientX;
+            let clientY;
+
+            if (e.touches && e.touches.length) {
+
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+
+            } else {
+
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+
+        function scratch(e) {
+
+            if (!isDrawing || revealed) {
+                return;
+            }
+
+            const pos = getPosition(e);
+
+            ctx.globalCompositeOperation =
+                "destination-out";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                pos.x,
+                pos.y,
+                24,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+            checkReveal();
+        }
+
+
+        function checkReveal() {
+
+            if (revealed) {
+                return;
+            }
+
+            const imageData = ctx.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            let transparent = 0;
+
+            for (
+                let i = 3;
+                i < imageData.data.length;
+                i += 4
+            ) {
+
+                if (imageData.data[i] < 50) {
+                    transparent++;
+                }
+            }
+
+            const percentage =
+                transparent /
+                (imageData.data.length / 4);
+
+            if (percentage > .42) {
+
+                revealed = true;
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                if (typeof confetti === "function") {
+
+                    confetti({
+                        particleCount: 160,
+                        spread: 100,
+                        startVelocity: 35,
+                        origin: {
+                            x: .5,
+                            y: .5
+                        }
+                    });
+                }
+
+                setTimeout(() => {
+
+                    document
+                        .getElementById("page1")
+                        .classList.remove("active");
+
+                    document
+                        .getElementById("page2")
+                        .classList.add("active");
+
+                }, 650);
+            }
+        }
+
+
+        /* DESKTOP SCRATCH */
+
+        canvas.addEventListener(
+            "mousedown",
+            function(e) {
+
+                isDrawing = true;
+                scratch(e);
+
+            }
         );
 
-        confetti({
-            particleCount: 160,
-            spread: 100,
-            startVelocity: 35,
-            origin: {
-                x: .5,
-                y: .5
+
+        canvas.addEventListener(
+            "mousemove",
+            scratch
+        );
+
+
+        window.addEventListener(
+            "mouseup",
+            function() {
+
+                isDrawing = false;
+
             }
-        });
+        );
 
-        setTimeout(() => {
 
-            document
-                .getElementById("page1")
-                .classList.remove("active");
+        /* IOS / ANDROID TOUCH */
 
-            document
-                .getElementById("page2")
-                .classList.add("active");
+        canvas.addEventListener(
+            "touchstart",
+            function(e) {
 
-        }, 650);
-    }
-}
+                isDrawing = true;
 
-canvas.addEventListener(
-    "mousedown",
-    function(e) {
-        isDrawing = true;
-        scratch(e);
-    }
-);
+                scratch(e);
 
-canvas.addEventListener(
-    "mousemove",
-    scratch
-);
+                e.preventDefault();
 
-window.addEventListener(
-    "mouseup",
-    function() {
-        isDrawing = false;
-    }
-);
+            },
+            {
+                passive: false
+            }
+        );
 
-canvas.addEventListener(
-    "touchstart",
-    function(e) {
 
-        isDrawing = true;
-        scratch(e);
-        e.preventDefault();
+        canvas.addEventListener(
+            "touchmove",
+            function(e) {
 
-    },
-    { passive: false }
-);
+                scratch(e);
 
-canvas.addEventListener(
-    "touchmove",
-    function(e) {
+                e.preventDefault();
 
-        scratch(e);
-        e.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
 
-    },
-    { passive: false }
-);
 
-canvas.addEventListener(
-    "touchend",
-    function() {
-        isDrawing = false;
-    }
-);
+        canvas.addEventListener(
+            "touchend",
+            function() {
 
-window.addEventListener(
-    "resize",
-    function() {
-        if (!revealed) setupCanvas();
-    }
-);
+                isDrawing = false;
 
-setupCanvas();
+            }
+        );
 
-</script>
+
+        window.addEventListener(
+            "resize",
+            function() {
+
+                if (!revealed) {
+                    setupCanvas();
+                }
+
+            }
+        );
+
+
+        /* ==========================================
+           GOOGLE MAPS
+           UPDATED LOCATION
+        ========================================== */
+
+        function openGoogleMaps(event) {
+
+            event.preventDefault();
+
+            const mapsLink =
+                "https://maps.app.goo.gl/UJcg2d4FEaq7gZvH6";
+
+            window.location.href = mapsLink;
+        }
+
+
+        /* INITIALIZE */
+
+        setupCanvas();
+
+    </script>
 
 </body>
 </html>
